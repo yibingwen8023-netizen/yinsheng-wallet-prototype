@@ -67,8 +67,11 @@
     .upload-large .upload-status{position:absolute;top:8px;right:8px;
       background:var(--success);color:#fff;font-size:12px;padding:2px 8px;border-radius:var(--r-full);}
 
-    /* 身份证双列 */
-    .id-upload-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    /* 三列上传 */
+    .id-upload-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+    /* 双列上传 */
+    .dual-upload-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+
     .upload-card{
       border:1.5px dashed #C9CDD4;border-radius:var(--r-md);background:#FAFBFC;
       cursor:pointer;transition:all var(--tr);aspect-ratio:1.6;
@@ -79,7 +82,7 @@
     .upload-card.uploaded{border-style:solid;border-color:var(--success);background:var(--success-bg);}
     .upload-card-inner{display:flex;flex-direction:column;align-items:center;gap:6px;}
     .upload-card .upload-icon{font-size:28px;}
-    .upload-card .upload-text{font-size:12px;color:var(--text-3);}
+    .upload-card .upload-text{font-size:11px;color:var(--text-3);}
     .upload-card .upload-label{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
       background:rgba(0,0,0,.5);color:#fff;font-size:11px;padding:2px 8px;border-radius:var(--r-full);}
     .upload-card .upload-status{position:absolute;top:8px;right:8px;
@@ -89,21 +92,28 @@
     .form-section{background:#fff;border-radius:var(--r-lg);padding:16px;margin-bottom:12px;}
     .field-row{display:grid;grid-template-columns:1fr;gap:12px;}
     .field-row-2{grid-template-columns:1fr 1fr;}
+    .field-row-3{grid-template-columns:1fr 1fr 1fr;}
     .field-group{margin-bottom:14px;}
     .field-group:last-child{margin-bottom:0;}
-    .field-label{font-size:14px;color:var(--text-1);margin-bottom:8px;display:flex;align-items:center;gap:4px;}
-    .required{color:var(--error);}
+    .field-label{font-size:13px;color:var(--text-1);margin-bottom:6px;display:flex;align-items:center;gap:4px;}
+    .field-label .required{color:var(--error);font-size:13px;}
+    .field-hint{font-size:11px;color:var(--text-3);margin-left:auto;flex-shrink:0;}
     .input-wrap{border:1px solid #E5E6EB;border-radius:var(--r-sm);
       background:#fff;height:44px;display:flex;align-items:center;overflow:hidden;
       transition:border-color var(--tr);}
     .input-wrap:focus-within{border-color:var(--primary);}
     .input-wrap select{appearance:none;border:none;outline:none;background:transparent;
-      font-size:15px;color:var(--text-1);padding:0 32px 0 12px;height:100%;width:100%;
+      font-size:14px;color:var(--text-1);padding:0 32px 0 12px;height:100%;width:100%;
       background-image:url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%2386909C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
       background-repeat:no-repeat;background-position:right 12px center;}
     input.field-input{flex:1;height:100%;border:none;outline:none;background:transparent;
-      font-size:15px;color:var(--text-1);padding:0 12px;font-family:inherit;}
+      font-size:14px;color:var(--text-1);padding:0 12px;font-family:inherit;}
     input.field-input::placeholder{color:#C9CDD4;}
+    input.field-input[readonly]{background:#FAFBFC;color:var(--text-2);}
+
+    /* 自动填充标签 */
+    .auto-tag{font-size:11px;background:var(--primary-bg);color:var(--primary);
+      padding:1px 6px;border-radius:4px;margin-left:4px;white-space:nowrap;cursor:help;}
 
     /* 安全提示 */
     .security-tip{
@@ -141,8 +151,9 @@
     .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
     @media(max-width:380px){
-      .id-upload-row{grid-template-columns:1fr 1fr;gap:8px;}
       .field-row-2{grid-template-columns:1fr;}
+      .field-row-3{grid-template-columns:1fr;}
+      .id-upload-row{grid-template-columns:1fr 1fr;gap:8px;}
     }
   </style>
 </head>
@@ -217,66 +228,39 @@
     </div>
   </div>
 
-  <!-- 营业执照信息 -->
+  <!-- ==================== 一、法人信息 ==================== -->
+  <div class="section-title">一、法人信息</div>
+  <!-- 法人证件照片（先上传） -->
   <div class="upload-section">
-    <div class="section-title">营业执照信息</div>
-    <div class="upload-large" id="licenseBox" onclick="uploadLicense()">
-      <div class="upload-large-inner" id="licensePlaceholder">
-        <div class="upload-icon">📄</div>
-        <div class="upload-text">点击上传营业执照</div>
-      </div>
-      <div class="upload-status" id="licenseStatus" style="display:none;">✓ 已上传</div>
-    </div>
-  </div>
-
-  <div class="form-section">
-    <div class="field-row">
-      <div class="field-group">
-        <div class="field-label"><span class="required">*</span>营业执照注册号</div>
-        <div class="input-wrap">
-          <input class="field-input" type="text" placeholder="请输入" maxlength="18" id="licenseNo"/>
-        </div>
-      </div>
-    </div>
-    <div class="field-row">
-      <div class="field-group">
-        <div class="field-label"><span class="required">*</span>商户名称</div>
-        <div class="input-wrap">
-          <input class="field-input" type="text" placeholder="请输入" maxlength="50" id="merchantName"/>
-        </div>
-      </div>
-    </div>
-    <div class="field-row">
-      <div class="field-group" style="margin-bottom:0">
-        <div class="field-label"><span class="required">*</span>经营地址</div>
-        <div class="input-wrap">
-          <input class="field-input" type="text" placeholder="请输入" maxlength="100" id="merchantAddr"/>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 法人信息 -->
-  <div class="upload-section">
-    <div class="section-title">法人信息</div>
+    <div class="field-label" style="margin-bottom:10px;"><span class="required">*</span>法人证件照片</div>
     <div class="id-upload-row">
-      <div class="upload-card" id="legalFrontBox" onclick="uploadLegal('front')">
+      <div class="upload-card" id="legalFrontBox" onclick="uploadImage('legalFront')">
         <div class="upload-card-inner" id="legalFrontPlaceholder">
           <div class="upload-icon">📷</div>
-          <div class="upload-text">身份证正面</div>
+          <div class="upload-text">正面</div>
         </div>
+        <div class="upload-label">身份证正面</div>
         <div class="upload-status" id="legalFrontStatus" style="display:none;">✓</div>
       </div>
-      <div class="upload-card" id="legalBackBox" onclick="uploadLegal('back')">
+      <div class="upload-card" id="legalBackBox" onclick="uploadImage('legalBack')">
         <div class="upload-card-inner" id="legalBackPlaceholder">
           <div class="upload-icon">📷</div>
-          <div class="upload-text">身份证反面</div>
+          <div class="upload-text">反面</div>
         </div>
+        <div class="upload-label">身份证反面</div>
         <div class="upload-status" id="legalBackStatus" style="display:none;">✓</div>
+      </div>
+      <div class="upload-card" id="legalHandBox" onclick="uploadImage('legalHand')">
+        <div class="upload-card-inner" id="legalHandPlaceholder">
+          <div class="upload-icon">🤳</div>
+          <div class="upload-text">手持</div>
+        </div>
+        <div class="upload-label">手持证件照</div>
+        <div class="upload-status" id="legalHandStatus" style="display:none;">✓</div>
       </div>
     </div>
   </div>
-
+  <!-- 法人信息字段（后填写） -->
   <div class="form-section">
     <div class="field-row field-row-2">
       <div class="field-group">
@@ -286,22 +270,171 @@
         </div>
       </div>
       <div class="field-group">
-        <div class="field-label"><span class="required">*</span>法人身份证号</div>
+        <div class="field-label"><span class="required">*</span>法人手机号</div>
         <div class="input-wrap">
-          <input class="field-input" type="text" placeholder="请输入" maxlength="18" id="legalIdCard"/>
+          <input class="field-input" type="tel" placeholder="请输入11位手机号" maxlength="11" id="legalPhone"/>
+        </div>
+      </div>
+    </div>
+    <div class="field-row field-row-2">
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>法人证件号</div>
+        <div class="input-wrap">
+          <input class="field-input" type="text" placeholder="请输入身份证号" maxlength="18" id="legalIdCard"/>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>法人证件类型</div>
+        <div class="input-wrap">
+          <select id="legalIdType">
+            <option value="">请选择</option>
+            <option value="id_card" selected>身份证</option>
+            <option value="passport">护照</option>
+            <option value="military">军官证</option>
+            <option value="hk_macau">港澳通行证</option>
+            <option value="taiwan">台胞证</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="field-row field-row-2">
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>证件有效期</div>
+        <div class="input-wrap">
+          <input class="field-input" type="date" id="legalIdExpire" style="padding:0 12px;"/>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>法人性别</div>
+        <div class="input-wrap">
+          <select id="legalGender">
+            <option value="">请选择</option>
+            <option value="male">男</option>
+            <option value="female">女</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="field-row field-row-2">
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>法人邮箱</div>
+        <div class="input-wrap">
+          <input class="field-input" type="email" placeholder="请输入邮箱地址" maxlength="50" id="legalEmail"/>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>法人职业</div>
+        <div class="input-wrap">
+          <input class="field-input" type="text" placeholder="请输入职业" maxlength="30" id="legalOccupation"/>
+        </div>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group" style="margin-bottom:0">
+        <div class="field-label"><span class="required">*</span>法人地址</div>
+        <div class="input-wrap">
+          <input class="field-input" type="text" placeholder="请输入详细地址" maxlength="100" id="legalAddress"/>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 结算账户信息 -->
-  <div class="section-title">结算账户信息</div>
+  <!-- ==================== 二、营业执照 ==================== -->
+  <div class="section-title">二、营业执照</div>
+  <!-- 营业执照照片（先上传） -->
+  <div class="upload-section">
+    <div class="field-label" style="margin-bottom:10px;"><span class="required">*</span>营业执照照片</div>
+    <div class="upload-large" id="licensePhotoBox" onclick="uploadImage('licensePhoto')" style="aspect-ratio:16/9;">
+      <div class="upload-large-inner" id="licensePhotoPlaceholder">
+        <div class="upload-icon">📄</div>
+        <div class="upload-text">点击上传营业执照照片（图片清晰，不可编辑）</div>
+      </div>
+      <div class="upload-status" id="licensePhotoStatus" style="display:none;">✓ 已上传</div>
+    </div>
+  </div>
+  <!-- 营业执照字段（后填写） -->
   <div class="form-section">
+    <div class="field-row field-row-2">
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>营业执照编号</div>
+        <div class="input-wrap">
+          <input class="field-input" type="text" placeholder="统一社会信用代码" maxlength="18" id="licenseNo"/>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>截止日期（开始时间）</div>
+        <div class="input-wrap">
+          <input class="field-input" type="date" id="licenseExpireDate" style="padding:0 12px;"/>
+        </div>
+      </div>
+    </div>
     <div class="field-row">
       <div class="field-group">
-        <div class="field-label"><span class="required">*</span>开户银行</div>
+        <div class="field-label"><span class="required">*</span>营业执照名称</div>
         <div class="input-wrap">
-          <select id="bankName">
+          <input class="field-input" type="text" placeholder="请输入" maxlength="80" id="licenseName"/>
+        </div>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>注册地址</div>
+        <div class="input-wrap">
+          <input class="field-input" type="text" placeholder="请输入注册地址" maxlength="100" id="regAddress"/>
+        </div>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group" style="margin-bottom:0">
+        <div class="field-label"><span class="required">*</span>经营地址</div>
+        <div class="input-wrap">
+          <input class="field-input" type="text" placeholder="请输入实际经营地址" maxlength="100" id="bizAddress"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 三、结算账户 ==================== -->
+  <div class="section-title">三、结算账户</div>
+  <div class="form-section">
+    <div class="field-row field-row-2">
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>结算账户卡类型</div>
+        <div class="input-wrap">
+          <select id="settleCardType" onchange="onSettleCardTypeChange()">
+            <option value="">请选择</option>
+            <option value="public_corp">个体户 — 对公营业执照对公账户</option>
+            <option value="private_legal">个体户 — 法人银行卡（对私）</option>
+            <option value="enterprise_public">企业 — 企业账户</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>结算账户卡号</div>
+        <div class="input-wrap">
+          <input class="field-input" type="text" placeholder="请输入银行账号" maxlength="25" id="settleCardNo"/>
+        </div>
+      </div>
+    </div>
+    <div class="field-row field-row-2">
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>结算账户户名</div>
+        <div class="input-wrap">
+          <input class="field-input" type="text" placeholder="请输入户名" maxlength="50" id="settleAccountName"/>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>开户行所在省市区</div>
+        <div class="input-wrap">
+          <input class="field-input" type="text" placeholder="请输入省/市/区" maxlength="40" id="bankCityDistrict"/>
+        </div>
+      </div>
+    </div>
+    <div class="field-row field-row-2">
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>银行名称</div>
+        <div class="input-wrap">
+          <select id="settleBankName">
             <option value="">请选择银行</option>
             <option value="ICBC">中国工商银行</option>
             <option value="ABC">中国农业银行</option>
@@ -317,48 +450,114 @@
             <option value="PAB">平安银行</option>
             <option value="PSBC">中国邮政储蓄银行</option>
             <option value="SPDB">浦发银行</option>
+            <option value="CIB">兴业银行</option>
+            <option value="PZCB">珠海华润银行</option>
+            <option value="OTHER">其他银行</option>
           </select>
         </div>
       </div>
-    </div>
-    <div class="field-row">
       <div class="field-group">
-        <div class="field-label"><span class="required">*</span>对公账户</div>
+        <div class="field-label"><span class="required">*</span>开户行编号</div>
         <div class="input-wrap">
-          <input class="field-input" type="text" placeholder="请输入对公账户" maxlength="30" id="publicAccount"/>
-        </div>
-      </div>
-    </div>
-    <div class="field-row">
-      <div class="field-group" style="margin-bottom:0">
-        <div class="field-label"><span class="required">*</span>账户名称</div>
-        <div class="input-wrap">
-          <input class="field-input" type="text" placeholder="请输入账户名称" maxlength="50" id="accountName"/>
+          <input class="field-input" type="text" placeholder="请输入联行号" maxlength="20" id="branchCode"/>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 联系人信息 -->
-  <div class="section-title">联系人信息</div>
+  <!-- 结算账户卡号图片 -->
+  <div class="upload-section">
+    <div class="field-label" style="margin-bottom:10px;"><span class="required">*</span>结算账户卡号图片</div>
+    <div class="upload-grid">
+      <div class="upload-card" id="settleCardFrontBox" onclick="uploadImage('settleCardFront')">
+        <div class="upload-card-inner" id="settleCardFrontPlaceholder">
+          <div class="upload-icon">💳</div>
+          <div class="upload-text">银行卡</div>
+        </div>
+        <div class="upload-label">银行卡正面</div>
+        <div class="upload-status" id="settleCardFrontStatus" style="display:none;">✓</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 四、联系人 ==================== -->
+  <div class="section-title">四、联系人</div>
   <div class="form-section">
     <div class="field-row field-row-2">
       <div class="field-group">
-        <div class="field-label">联系人姓名</div>
+        <div class="field-label"><span class="required">*</span>联系人姓名</div>
         <div class="input-wrap">
-          <input class="field-input" type="text" placeholder="选填" maxlength="20" id="contactName"/>
+          <input class="field-input" type="text" placeholder="" readonly id="contactName"/>
         </div>
       </div>
-      <div class="field-group" style="margin-bottom:0">
-        <div class="field-label">联系人手机</div>
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>联系人证件号</div>
         <div class="input-wrap">
-          <input class="field-input" type="tel" placeholder="选填" maxlength="11" id="contactPhone"/>
+          <input class="field-input" type="text" placeholder="" readonly id="contactIdCard"/>
+        </div>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group" style="margin-bottom:0">
+        <div class="field-label"><span class="required">*</span>联系人地址</div>
+        <div class="input-wrap">
+          <input class="field-input" type="text" placeholder="" readonly id="contactAddress"/>
         </div>
       </div>
     </div>
   </div>
 
-  <div style="height:16px;"></div>
+  <!-- ==================== 五、其他 ==================== -->
+  <div class="section-title">五、其他</div>
+  <div class="form-section">
+    <div class="field-row field-row-2">
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>所在省市</div>
+        <div class="input-wrap">
+          <input class="field-input" type="text" placeholder="请输入省/市/区" maxlength="40" id="locationCity"/>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>MCC码</div>
+        <div class="input-wrap">
+          <input class="field-input" type="text" placeholder="请输入行业类别码" maxlength="10" id="mccCode"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 场景照片 -->
+  <div class="upload-section">
+    <div class="field-label" style="margin-bottom:10px;"><span class="required">*</span>门店场景照片</div>
+    <div class="id-upload-row">
+      <div class="upload-card" id="sceneDoorBox" onclick="uploadImage('sceneDoor')">
+        <div class="upload-card-inner" id="sceneDoorPlaceholder">
+          <div class="upload-icon">🚪</div>
+          <div class="upload-text">门头照</div>
+        </div>
+        <div class="upload-label">门头招牌照</div>
+        <div class="upload-status" id="sceneDoorStatus" style="display:none;">✓</div>
+      </div>
+      <div class="upload-card" id="sceneCashierBox" onclick="uploadImage('sceneCashier')">
+        <div class="upload-card-inner" id="sceneCashierPlaceholder">
+          <div class="upload-icon">🖥️</div>
+          <div class="upload-text">收银台</div>
+        </div>
+        <div class="upload-label">收银台环境</div>
+        <div class="upload-status" id="sceneCashierStatus" style="display:none;">✓</div>
+      </div>
+      <div class="upload-card" id="sceneInteriorBox" onclick="uploadImage('sceneInterior')">
+        <div class="upload-card-inner" id="sceneInteriorPlaceholder">
+          <div class="upload-icon">🏪</div>
+          <div class="upload-text">场景照</div>
+        </div>
+        <div class="upload-label">店内全景</div>
+        <div class="upload-status" id="sceneInteriorStatus" style="display:none;">✓</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:24px;"></div>
 </div>
 
 <!-- 底部按钮 -->
@@ -371,9 +570,13 @@
 </div>
 
 <script>
-  let uploadedLicense = false;
-  let uploadedLegalFront = false;
-  let uploadedLegalBack = false;
+  // ====== 上传状态追踪 ======
+  const uploadState = {
+    legalFront: false, legalBack: false, legalHand: false,
+    licensePhoto: false,
+    settleCardFront: false,
+    sceneDoor: false, sceneCashier: false, sceneInterior: false,
+  };
 
   function showToast(msg, d = 2000) {
     const t = document.getElementById('toast');
@@ -387,98 +590,109 @@
     window.location.href = 'yinsheng-account-type.html';
   }
 
-  function uploadLicense() {
-    const box = document.getElementById('licenseBox');
-    const placeholder = document.getElementById('licensePlaceholder');
-    const status = document.getElementById('licenseStatus');
-    if (!uploadedLicense) {
-      showToast('📄 点击上传营业执照');
-      // 模拟上传
+  // ====== 通用图片上传模拟 ======
+  function uploadImage(key) {
+    const box = document.getElementById(key + 'Box');
+    const placeholder = document.getElementById(key + 'Placeholder');
+    const status = document.getElementById(key + 'Status');
+
+    if (!uploadState[key]) {
+      const labelMap = {
+        'legalFront': '身份证正面', 'legalBack': '身份证反面', 'legalHand': '手持身份证',
+        'licensePhoto': '营业执照',
+        'settleCardFront': '银行卡正面',
+        'sceneDoor': '门头照', 'sceneCashier': '收银台照', 'sceneInterior': '店内场景照'
+      };
+      showToast(`📷 正在上传 ${labelMap[key] || key}...`);
       setTimeout(() => {
-        uploadedLicense = true;
+        uploadState[key] = true;
         box.classList.add('uploaded');
-        placeholder.style.display = 'none';
-        status.style.display = 'block';
-        showToast('✓ 营业执照上传成功');
-      }, 800);
+        if (placeholder) placeholder.style.display = 'none';
+        if (status) status.style.display = 'block';
+        showToast(`✓ ${labelMap[key] || key} 上传成功`);
+      }, 700);
     } else {
-      showToast('📄 点击重新上传营业执照');
+      showToast('📷 点击可重新上传');
     }
   }
 
-  function uploadLegal(side) {
-    const box = document.getElementById(side === 'front' ? 'legalFrontBox' : 'legalBackBox');
-    const placeholder = document.getElementById(side === 'front' ? 'legalFrontPlaceholder' : 'legalBackPlaceholder');
-    const status = document.getElementById(side === 'front' ? 'legalFrontStatus' : 'legalBackStatus');
-    const key = side === 'front' ? 'uploadedLegalFront' : 'uploadedLegalBack';
+  // ====== 自动同步：联系人 ← 法人 ======
+  function syncContactFromLegal() {
+    const name = document.getElementById('legalName').value.trim();
+    const idCard = document.getElementById('legalIdCard').value.trim();
+    const address = document.getElementById('legalAddress').value.trim();
 
-    if (!window[key]) {
-      showToast(`📷 点击上传身份证${side === 'front' ? '正面' : '反面'}`);
-      setTimeout(() => {
-        window[key] = true;
-        box.classList.add('uploaded');
-        placeholder.style.display = 'none';
-        status.style.display = 'block';
-        showToast(`✓ 身份证${side === 'front' ? '正面' : '反面'}上传成功`);
-      }, 600);
-    } else {
-      showToast(`📷 点击重新上传身份证${side === 'front' ? '正面' : '反面'}`);
-    }
+    document.getElementById('contactName').value = name;
+    document.getElementById('contactIdCard').value = idCard;
+    document.getElementById('contactAddress').value = address;
   }
 
+  // 监听法人关键字段变化
+  ['legalName', 'legalIdCard', 'legalAddress'].forEach(id => {
+    document.getElementById(id).addEventListener('input', syncContactFromLegal);
+  });
+
+  // ====== 结算账户卡类型联动提示 ======
+  function onSettleCardTypeChange() {
+    const val = document.getElementById('settleCardType').value;
+    if (!val) return;
+    const tips = {
+      'public_corp': '已选择：个体户对公营业执照对公账户',
+      'private_legal': '已选择：个体户法人银行卡（对私）',
+      'enterprise_public': '已选择：企业账户',
+    };
+    if (tips[val]) showToast(tips[val]);
+  }
+
+  // ====== 表单验证 ======
   function validateForm() {
-    if (!uploadedLicense) {
-      showToast('请上传营业执照');
-      return false;
+    // 一、法人信息
+    if (!document.getElementById('legalName').value.trim()) { showToast('请填写法人姓名'); return false; }
+    if (!document.getElementById('legalPhone').value.trim()) { showToast('请填写法人手机号'); return false; }
+    if (document.getElementById('legalPhone').value.length !== 11) { showToast('法人手机号格式不正确'); return false; }
+    if (!document.getElementById('legalIdCard').value.trim()) { showToast('请填写法人证件号'); return false; }
+    if (!document.getElementById('legalIdType').value) { showToast('请选择法人证件类型'); return false; }
+    if (!document.getElementById('legalIdExpire').value) { showToast('请选择证件有效期'); return false; }
+    if (!document.getElementById('legalGender').value) { showToast('请选择法人性别'); return false; }
+    if (!document.getElementById('legalEmail').value.trim()) { showToast('请填写法人邮箱'); return false; }
+    if (!document.getElementById('legalOccupation').value.trim()) { showToast('请填写法人职业'); return false; }
+    if (!document.getElementById('legalAddress').value.trim()) { showToast('请填写法人地址'); return false; }
+
+    // 法人证件照片
+    if (!uploadState.legalFront || !uploadState.legalBack || !uploadState.legalHand) {
+      showToast('请上传法人证件正反面及手持照'); return false;
     }
-    const licenseNo = document.getElementById('licenseNo').value.trim();
-    const merchantName = document.getElementById('merchantName').value.trim();
-    const merchantAddr = document.getElementById('merchantAddr').value.trim();
-    if (!licenseNo) {
-      showToast('请填写营业执照注册号');
-      return false;
+
+    // 二、营业执照
+    if (!document.getElementById('licenseNo').value.trim()) { showToast('请填写营业执照编号'); return false; }
+    if (!document.getElementById('licenseName').value.trim()) { showToast('请填写营业执照名称'); return false; }
+    if (!document.getElementById('regAddress').value.trim()) { showToast('请填写注册地址'); return false; }
+    if (!document.getElementById('bizAddress').value.trim()) { showToast('请填写经营地址'); return false; }
+    if (!document.getElementById('licenseExpireDate').value) { showToast('请选择截止日期'); return false; }
+    if (!uploadState.licensePhoto) { showToast('请上传营业执照照片'); return false; }
+
+    // 三、结算账户
+    if (!document.getElementById('settleCardType').value) { showToast('请选择结算账户卡类型'); return false; }
+    if (!document.getElementById('settleCardNo').value.trim()) { showToast('请填写结算账户卡号'); return false; }
+    if (!document.getElementById('settleAccountName').value.trim()) { showToast('请填写结算账户户名'); return false; }
+    if (!document.getElementById('bankCityDistrict').value.trim()) { showToast('请填写开户行所在省市区'); return false; }
+    if (!document.getElementById('settleBankName').value) { showToast('请选择银行名称'); return false; }
+    if (!document.getElementById('branchCode').value.trim()) { showToast('请填写开户行编号'); return false; }
+    if (!uploadState.settleCardFront) {
+      showToast('请上传结算账户银行卡图片'); return false;
     }
-    if (!merchantName) {
-      showToast('请填写商户名称');
-      return false;
+
+    // 四、联系人（姓名/证件号/地址自动同步，无需手动校验）
+
+    // 五、其他
+    if (!document.getElementById('locationCity').value.trim()) { showToast('请填写所在省市'); return false; }
+    if (!document.getElementById('mccCode').value.trim()) { showToast('请填写MCC码'); return false; }
+
+    // 场景照片
+    if (!uploadState.sceneDoor || !uploadState.sceneCashier || !uploadState.sceneInterior) {
+      showToast('请上传门头照、收银台照和场景照'); return false;
     }
-    if (!merchantAddr) {
-      showToast('请填写经营地址');
-      return false;
-    }
-    if (!uploadedLegalFront || !uploadedLegalBack) {
-      showToast('请上传法人身份证正反面');
-      return false;
-    }
-    const legalName = document.getElementById('legalName').value.trim();
-    const legalIdCard = document.getElementById('legalIdCard').value.trim();
-    if (!legalName) {
-      showToast('请填写法人姓名');
-      return false;
-    }
-    if (!legalIdCard) {
-      showToast('请填写法人身份证号');
-      return false;
-    }
-    if (legalIdCard.length !== 18) {
-      showToast('法人身份证号格式不正确');
-      return false;
-    }
-    const bankName = document.getElementById('bankName').value;
-    const publicAccount = document.getElementById('publicAccount').value.trim();
-    const accountName = document.getElementById('accountName').value.trim();
-    if (!bankName) {
-      showToast('请选择开户银行');
-      return false;
-    }
-    if (!publicAccount) {
-      showToast('请填写对公账户');
-      return false;
-    }
-    if (!accountName) {
-      showToast('请填写账户名称');
-      return false;
-    }
+
     return true;
   }
 
