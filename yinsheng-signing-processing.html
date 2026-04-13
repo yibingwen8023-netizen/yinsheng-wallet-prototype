@@ -57,6 +57,37 @@
       padding: 0;
     }
 
+    /* ===== 顶部导航 ===== */
+    .nav-bar {
+      background: #fff;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--color-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--color-text-secondary);
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .nav-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+    .nav-step {
+      font-size: 14px;
+      color: var(--color-primary);
+      font-weight: 500;
+    }
+
     /* ===== 步骤条 ===== */
     .step-bar {
       background: #fff;
@@ -623,6 +654,18 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
+<!-- 顶部导航 -->
+<nav class="nav-bar">
+  <div class="nav-back" onclick="history.back()">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M12 4L6 10L12 16" stroke="#4E5969" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    返回
+  </div>
+  <div class="nav-title">银盛审核</div>
+  <div class="nav-step" id="navStep">2/5</div>
+</nav>
+
 <!-- 结果弹窗 -->
 <div class="result-overlay" id="resultOverlay">
   <div class="result-modal" id="resultModal">
@@ -656,14 +699,10 @@
     </div>
     <div class="step-item">
       <div class="step-num">4</div>
-      <div class="step-name">绑定银行卡</div>
+      <div class="step-name">微信/支付宝认证</div>
     </div>
     <div class="step-item">
       <div class="step-num">5</div>
-      <div class="step-name">设置密码</div>
-    </div>
-    <div class="step-item">
-      <div class="step-num">6</div>
       <div class="step-name">申请成功</div>
     </div>
   </div>
@@ -904,7 +943,10 @@
 
     if (type === 'success') {
       // 审核通过直接跳转到签约确认页
-      window.location.href = 'yinsheng-signing-confirm.html';
+      const flow = accountType === 'personal'
+        ? 'yinsheng-signing-confirm.html'
+        : 'yinsheng-signing-confirm-merchant.html';
+      window.location.href = flow;
     } else {
       document.getElementById('iconFail').classList.add('show');
       document.getElementById('mainText').textContent = '审核未通过';
@@ -1032,6 +1074,11 @@
   /* ============================================================
      初始化
   ============================================================ */
+  // 导航栏步骤数
+  const navStep = document.getElementById('navStep');
+  const at = sessionStorage.getItem('accountType') || 'personal';
+  navStep.textContent = at === 'merchant' ? '2/5' : '2/6';
+
   startTimer();
   // 自动轮询已禁用，仅保留手动刷新
 </script>
