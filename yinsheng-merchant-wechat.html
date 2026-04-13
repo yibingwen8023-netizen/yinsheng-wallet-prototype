@@ -209,7 +209,6 @@
 <!-- 底部按钮 -->
 <div class="bottom-bar">
   <div class="btn-row">
-    <button class="btn-outline" onclick="goBack()">上一步</button>
     <button class="btn-primary" onclick="markComplete()">已完成认证</button>
   </div>
   <div class="bottom-tech">由银盛提供技术支持</div>
@@ -222,11 +221,6 @@
     t.classList.add('show');
     clearTimeout(t._t);
     t._t = setTimeout(() => t.classList.remove('show'), d);
-  }
-
-  function goBack() {
-    // 商户流程返回到签约确认页（商户有签约步骤）
-    window.location.href = 'yinsheng-signing-confirm.html';
   }
 
   function refreshQR() {
