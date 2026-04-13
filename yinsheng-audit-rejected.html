@@ -252,6 +252,36 @@
       color: var(--color-text-secondary);
     }
 
+    /* ===== 底部按钮 ===== */
+    .btn-area {
+      padding: 0 24px 40px;
+      display: flex;
+      gap: 12px;
+    }
+    .btn {
+      flex: 1;
+      height: 48px;
+      border-radius: var(--radius-md);
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-primary {
+      background: var(--color-primary);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(22, 93, 255, 0.35);
+    }
+    .btn-primary:active {
+      background: var(--color-primary-dark);
+      transform: scale(0.98);
+    }
+
 
   </style>
 </head>
@@ -277,14 +307,10 @@
     </div>
     <div class="step-item">
       <div class="step-num">4</div>
-      <div class="step-name">绑定银行卡</div>
+      <div class="step-name">微信认证</div>
     </div>
     <div class="step-item">
       <div class="step-num">5</div>
-      <div class="step-name">设置密码</div>
-    </div>
-    <div class="step-item">
-      <div class="step-num">6</div>
       <div class="step-name">申请成功</div>
     </div>
     </div>
@@ -339,5 +365,12 @@
       </div>
     </div>
   </main>
+
+  <!-- 底部按钮 -->
+  <div class="btn-area">
+    <button class="btn btn-primary" onclick="location.href='yinsheng-merchant-apply.html'">
+      继续提交
+    </button>
+  </div>
 </body>
 </html>
