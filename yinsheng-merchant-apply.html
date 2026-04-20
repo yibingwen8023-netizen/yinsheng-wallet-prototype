@@ -105,7 +105,6 @@
     .long-term-label{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--text-2);cursor:pointer;white-space:nowrap;user-select:none;}
     .long-term-label input[type="checkbox"]{width:16px;height:16px;accent-color:var(--primary);cursor:pointer;}
     .long-term-label input[type="checkbox"]:checked + span{color:var(--primary);}
-    .long-term-tip{font-size:11px;color:var(--text-3);white-space:nowrap;}
     .input-wrap select{appearance:none;border:none;outline:none;background:transparent;
       font-size:14px;color:var(--text-1);padding:0 32px 0 12px;height:100%;width:100%;
       background-image:url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%2386909C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -323,7 +322,8 @@
 
   <!-- ==================== 二、商户相关 ==================== -->
   <div class="section-title">二、商户相关</div>
-  <div class="field-row field-row-2">
+  <div class="form-section">
+    <div class="field-row field-row-2">
     <div class="field-group">
       <div class="field-label"><span class="required">*</span>商户名称</div>
       <div class="input-wrap">
@@ -350,6 +350,7 @@
       </div>
     </div>
   </div>
+  </div>
 
   <!-- ==================== 三、营业执照 ==================== -->
   <div class="section-title">三、营业执照</div>
@@ -373,6 +374,8 @@
           <input class="field-input" type="text" placeholder="统一社会信用代码" maxlength="18" id="licenseNo"/>
         </div>
       </div>
+    </div>
+    <div class="field-row field-row-2">
       <div class="field-group">
         <div class="field-label"><span class="required">*</span>开始日期</div>
         <div class="input-wrap">
@@ -380,13 +383,13 @@
         </div>
       </div>
       <div class="field-group">
-        <div class="field-label"><span class="required">*</span>截止日期</div>
-        <div class="input-wrap" style="display:flex;align-items:center;gap:10px;">
-          <input class="field-input" type="date" id="licenseExpireDate" style="padding:0 12px;flex:1;" placeholder="年/月/日"/>
-          <label class="long-term-label">
-            <input type="checkbox" id="isLongTerm" onchange="toggleLongTerm()"/> 长期
+        <div class="field-label"><span class="required">*</span>截止日期
+          <label class="long-term-label" style="font-size:12px;color:var(--text-3);margin-left:4px;font-weight:400;cursor:pointer;">
+            <input type="checkbox" id="isLongTerm" onchange="toggleLongTerm()"/> 长期、无固定期限
           </label>
-          <span class="long-term-tip">无固定期限填 2999-12-31</span>
+        </div>
+        <div class="input-wrap">
+          <input class="field-input" type="date" id="licenseExpireDate" style="padding:0 12px;" placeholder="年/月/日"/>
         </div>
       </div>
     </div>
