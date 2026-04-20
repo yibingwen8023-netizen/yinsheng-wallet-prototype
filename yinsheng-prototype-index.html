@@ -46,10 +46,10 @@
     /* 流程总览箭头图 */
     .flow-overview{background:#fff;margin:0 16px;margin-top:-28px;border-radius:var(--r-lg);
       box-shadow:var(--shadow-card);border:1px solid rgba(229,230,235,.6);
-      padding:20px 16px;position:relative;z-index:10;}
+      padding:20px 16px;position:relative;z-index:10;overflow:visible;}
     .flow-title{font-size:14px;font-weight:600;color:var(--text-2);margin-bottom:16px;
       display:flex;align-items:center;gap:6px;}
-    .flow-steps{display:flex;align-items:center;overflow-x:auto;gap:0;padding-bottom:4px;}
+    .flow-steps{display:flex;align-items:center;overflow:visible;gap:0;padding-bottom:4px;flex-wrap:wrap;}
     .flow-steps::-webkit-scrollbar{height:3px;}
     .flow-steps::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
     .flow-step{display:flex;flex-direction:column;align-items:center;gap:6px;
@@ -77,15 +77,16 @@
     /* 节点弹出菜单 */
     .node-popup-wrap{position:relative;display:inline-flex;flex-direction:column;align-items:center;}
     .node-popup{
-      display:none;position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);
+      display:none;position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);
       background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.14),0 2px 8px rgba(0,0,0,0.08);
-      border:1px solid rgba(229,230,235,0.8);min-width:168px;z-index:999;overflow:hidden;
+      border:1px solid rgba(229,230,235,0.8);min-width:168px;z-index:9999;overflow:visible;
     }
     .node-popup.show{display:block;animation:popup-in 150ms cubic-bezier(0.4,0,0.2,1);}
-    @keyframes popup-in{from{opacity:0;transform:translateX(-50%) translateY(6px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
-    .node-popup::after{content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);
-      width:10px;height:10px;background:#fff;border-right:1px solid rgba(229,230,235,0.8);
-      border-bottom:1px solid rgba(229,230,235,0.8);transform:translateX(-50%) rotate(45deg);}
+    @keyframes popup-in{from{opacity:0;transform:translateX(-50%) translateY(-6px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
+    .node-popup::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%) rotate(45deg);
+      width:10px;height:10px;background:#fff;border-left:1px solid rgba(229,230,235,0.8);
+      border-top:1px solid rgba(229,230,235,0.8);}
+    .node-popup-inner{border-radius:12px;overflow:hidden;}
     .popup-header{padding:8px 12px 6px;font-size:11px;color:#86909C;font-weight:500;
       border-bottom:1px solid #F2F3F5;}
     .popup-item{display:flex;align-items:center;gap:8px;padding:9px 12px;cursor:pointer;
@@ -194,6 +195,7 @@
         <div class="flow-step-label flow-step-label-except">银盛审核</div>
       </div>
       <div class="node-popup" id="popup-personal-audit">
+        <div class="node-popup-inner">
         <div class="popup-header">银盛审核 · 个人 · 跳转页面</div>
         <a class="popup-item" href="yinsheng-signing-processing.html">
           <div class="popup-item-dot" style="background:#165DFF;"></div>
@@ -207,6 +209,7 @@
           <div class="popup-item-dot" style="background:#F53F3F;"></div>
           <div><div class="popup-item-text">🚫 审核不通过</div><div class="popup-item-sub">异常 → 有重新提交按钮</div></div>
         </a>
+        </div><!-- /node-popup-inner -->
       </div>
     </div>
     <div class="flow-arrow">›</div>
@@ -255,6 +258,7 @@
         <div class="flow-step-label flow-step-label-except">银盛审核</div>
       </div>
       <div class="node-popup" id="popup-merchant-audit">
+        <div class="node-popup-inner">
         <div class="popup-header">银盛审核 · 商户 · 跳转页面</div>
         <a class="popup-item" href="yinsheng-signing-processing.html">
           <div class="popup-item-dot" style="background:#165DFF;"></div>
@@ -268,6 +272,7 @@
           <div class="popup-item-dot" style="background:#F53F3F;"></div>
           <div><div class="popup-item-text">🚫 商户审核不通过</div><div class="popup-item-sub">异常 → 有重新提交按钮</div></div>
         </a>
+        </div><!-- /node-popup-inner -->
       </div>
     </div>
     <div class="flow-arrow">›</div>
@@ -741,6 +746,25 @@
   申请银盛收款账户 · UI 原型设计稿<br/>
   银盛支付服务股份有限公司 © 2026
 </div>
+
+<script>
+  function togglePopup(id, e) {
+    e.stopPropagation();
+    const popup = document.getElementById(id);
+    const allPopups = document.querySelectorAll('.node-popup');
+    // 关闭其他弹窗
+    allPopups.forEach(p => { if (p.id !== id) p.classList.remove('show'); });
+    popup.classList.toggle('show');
+  }
+  // 点击其他地方关闭
+  document.addEventListener('click', function() {
+    document.querySelectorAll('.node-popup').forEach(p => p.classList.remove('show'));
+  });
+  // 弹窗内点击链接不关闭弹窗
+  document.querySelectorAll('.node-popup').forEach(popup => {
+    popup.addEventListener('click', e => e.stopPropagation());
+  });
+</script>
 
 </body>
 </html>
