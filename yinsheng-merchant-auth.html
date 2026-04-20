@@ -19,7 +19,7 @@
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",Arial,sans-serif;
-      background:var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased;padding-bottom:100px;}
+      background:var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased;padding-bottom:120px;}
 
     /* 顶部导航 */
     .nav-bar{background:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;
@@ -44,19 +44,18 @@
     .step-item.active .step-name{color:var(--primary);font-weight:500;}
     .step-item.done .step-name{color:var(--success);}
 
-    /* 内容 */
     .page-content{max-width:520px;margin:0 auto;padding:20px 16px;}
 
     /* ===== Tab 切换 ===== */
     .tab-bar{display:flex;background:#fff;border-radius:var(--r-lg);padding:4px;margin-bottom:16px;
-      box-shadow:var(--shadow-card);border:1px solid var(--border);}
+      box-shadow:var(--shadow-card);border:1px solid var(--border);position:relative;}
     .tab-item{flex:1;height:44px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;
       gap:6px;font-size:14px;font-weight:500;color:var(--text-3);cursor:pointer;transition:all var(--tr);
       border:none;background:transparent;position:relative;}
     .tab-item.active{background:var(--primary);color:#fff;box-shadow:0 2px 8px rgba(22,93,255,.3);}
     .tab-item:not(.active):hover{background:var(--primary-bg);}
-    /* Tab 上的状态小点 */
-    .tab-dot{width:8px;height:8px;border-radius:50%;position:absolute;top:8px;right:12px;}
+    /* Tab 状态小点 */
+    .tab-dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0;}
     .tab-dot.dot-waiting{background:var(--primary);}
     .tab-dot.dot-success{background:var(--success);}
     .tab-dot.dot-error{background:var(--error);}
@@ -66,93 +65,100 @@
     /* 认证卡片 */
     .auth-card{background:#fff;border-radius:var(--r-lg);padding:32px 20px;text-align:center;
       box-shadow:var(--shadow-card);transition:all var(--tr);}
-    .auth-icon{font-size:64px;margin-bottom:20px;line-height:1;}
-    .auth-icon img{width:64px;height:64px;}
-    .auth-title{font-size:20px;font-weight:600;color:var(--text-1);margin-bottom:8px;}
-    .auth-desc{font-size:14px;color:var(--text-3);margin-bottom:24px;line-height:1.6;}
 
     /* 二维码区 */
     .qr-box{width:200px;height:200px;margin:0 auto 16px;background:#f8f8f8;border-radius:var(--r-md);
-      display:flex;align-items:center;justify-content:center;border:1px solid var(--border);position:relative;}
-    .qr-placeholder{font-size:80px;opacity:0.3;}
+      display:flex;align-items:center;justify-content:center;border:2px dashed var(--border);position:relative;}
+    .qr-placeholder{font-size:80px;opacity:0.25;}
     .qr-expire{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
-      background:rgba(0,0,0,.6);color:#fff;font-size:12px;padding:4px 12px;border-radius:var(--r-full);}
+      background:rgba(0,0,0,.6);color:#fff;font-size:11px;padding:3px 10px;border-radius:var(--r-full);}
 
-    /* 刷新按钮 */
-    .refresh-btn{display:inline-flex;align-items:center;gap:6px;color:var(--primary);font-size:14px;cursor:pointer;
-      padding:8px 16px;border-radius:var(--r-full);background:var(--primary-bg);margin-bottom:24px;
-      transition:all var(--tr);}
-    .refresh-btn:hover{background:var(--primary-pale);}
+    /* 刷新二维码按钮 */
+    .refresh-btn{display:inline-flex;align-items:center;gap:6px;color:var(--primary);font-size:13px;cursor:pointer;
+      padding:6px 14px;border-radius:var(--r-full);background:var(--primary-bg);margin-bottom:24px;
+      transition:all var(--tr);border:1px solid transparent;}
+    .refresh-btn:hover{background:var(--primary-pale);border-color:var(--primary);}
+    .refresh-btn:active{transform:scale(0.97);}
 
-    /* ===== 状态提示框 ===== */
-    .status-box{border-radius:var(--r-md);padding:16px 20px;display:flex;align-items:flex-start;gap:12px;text-align:left;}
-    .status-box .s-icon{font-size:24px;flex-shrink:0;margin-top:2px;}
-    .status-box .s-body{flex:1;}
-    .status-box .s-title{font-size:15px;font-weight:600;margin-bottom:4px;}
-    .status-box .s-desc{font-size:13px;color:var(--text-3);line-height:1.5;}
-    .status-box .s-action{margin-top:10px;}
-
-    /* 各色状态框 */
-    .status-box.s-blue{background:var(--primary-bg);}
-    .status-box.s-blue .s-title{color:var(--primary);}
-    .status-box.s-green{background:var(--success-bg);}
-    .status-box.s-green .s-title{color:var(--success);}
-    .status-box.s-red{background:var(--error-bg);}
-    .status-box.s-red .s-title{color:var(--error);}
-    .status-box.s-orange{background:var(--warning-bg);}
-    .status-box.s-orange .s-title{color:var(--warning);}
-    .status-box.s-grey{background:var(--grey-bg);}
-    .status-box.s-grey .s-title{color:var(--grey);}
-
-    /* 状态框内按钮 */
-    .s-btn{display:inline-flex;align-items:center;gap:4px;padding:8px 16px;border-radius:var(--r-full);
-      font-size:13px;font-weight:500;border:none;cursor:pointer;transition:all var(--tr);font-family:inherit;}
-    .s-btn:hover{filter:brightness(1.05);}
-    .s-btn:active{transform:scale(0.97);}
-    .s-btn-blue{background:var(--primary);color:#fff;}
-    .s-btn-red{background:var(--error);color:#fff;}
-    .s-btn-outline{background:#fff;color:var(--text-2);border:1px solid var(--border);}
-    .s-btn-grey{background:var(--grey);color:#fff;}
-
-    /* 结果大图标（通过/失败/终止） */
-    .result-icon{font-size:72px;margin-bottom:16px;line-height:1;}
-    .result-title{font-size:20px;font-weight:600;margin-bottom:8px;}
+    /* ===== 结果状态区域 ===== */
+    .result-area{padding-top:8px;}
+    .result-icon{font-size:64px;margin-bottom:16px;line-height:1;}
+    .result-title{font-size:20px;font-weight:600;margin-bottom:8px;line-height:1.4;}
     .result-desc{font-size:14px;color:var(--text-3);line-height:1.6;margin-bottom:20px;}
+    .result-title.t-success{color:var(--success);}
+    .result-title.t-error{color:var(--error);}
+    .result-title.t-warning{color:var(--warning);}
+    .result-title.t-grey{color:var(--grey);}
 
-    /* Tab 内容面板 */
+    /* 失败原因框 */
+    .reason-box{background:var(--error-bg);border-radius:var(--r-md);padding:12px 16px;
+      margin-bottom:20px;text-align:left;}
+    .reason-label{font-size:12px;color:var(--error);font-weight:500;margin-bottom:4px;}
+    .reason-text{font-size:13px;color:var(--text-2);line-height:1.5;}
+
+    /* 提示信息框（需操作/终止） */
+    .info-box{border-radius:var(--r-md);padding:16px 20px;text-align:left;display:flex;align-items:flex-start;gap:12px;}
+    .info-box .ib-icon{font-size:24px;flex-shrink:0;margin-top:1px;}
+    .info-box .ib-body{flex:1;}
+    .info-box .ib-title{font-size:15px;font-weight:600;margin-bottom:4px;}
+    .info-box .ib-desc{font-size:13px;color:var(--text-3);line-height:1.5;}
+    .info-box.ib-orange{background:var(--warning-bg);}
+    .info-box.ib-orange .ib-title{color:var(--warning);}
+    .info-box.ib-grey{background:var(--grey-bg);}
+    .info-box.ib-grey .ib-title{color:var(--grey);}
+
+    /* 双认证状态条 */
+    .both-status{display:flex;gap:12px;margin-top:16px;}
+    .both-item{flex:1;background:var(--bg);border-radius:var(--r-md);padding:12px;text-align:center;}
+    .both-item.b-pass{background:var(--success-bg);}
+    .both-item.b-wait{background:var(--primary-bg);}
+    .both-item .bi-icon{font-size:20px;margin-bottom:4px;}
+    .both-item .bi-label{font-size:12px;color:var(--text-3);}
+    .both-item .bi-status{font-size:13px;font-weight:600;margin-top:2px;}
+    .both-item.b-pass .bi-status{color:var(--success);}
+    .both-item.b-wait .bi-status{color:var(--primary);}
+
+    /* 操作按钮 */
+    .action-btns{display:flex;flex-direction:column;gap:10px;margin-top:20px;}
+    .btn{height:48px;border-radius:var(--r-full);font-size:16px;font-weight:600;border:none;cursor:pointer;
+      transition:all var(--tr);font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;}
+    .btn:active{transform:scale(0.98);}
+    .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;
+      box-shadow:0 4px 12px rgba(22,93,255,0.3);}
+    .btn-primary:disabled{background:#C9CDD4;box-shadow:none;cursor:not-allowed;}
+    .btn-error{background:linear-gradient(135deg,var(--error),#F76560);color:#fff;
+      box-shadow:0 4px 12px rgba(245,63,63,0.3);}
+    .btn-outline{background:#fff;color:var(--text-2);border:1px solid var(--border);}
+    .btn-outline:active{background:var(--bg);}
+
+    /* Tab 面板 */
     .tab-panel{display:none;}
     .tab-panel.active{display:block;}
 
-    /* 底部按钮 */
-    .bottom-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;padding:12px 20px 32px;
-      display:flex;flex-direction:column;gap:10px;z-index:50;border-top:1px solid var(--border);}
-    .bottom-tech{font-size:12px;color:#C9CDD4;text-align:center;}
-
-    /* ===== 状态切换器（开发调试） ===== */
+    /* ===== 状态切换器（演示用） ===== */
     .state-switcher{background:#fff;border-radius:var(--r-lg);padding:16px;margin-bottom:16px;
-      box-shadow:var(--shadow-card);border:1px solid var(--border);}
-    .state-switcher-title{font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:12px;
+      box-shadow:var(--shadow-card);border:2px dashed var(--warning);}
+    .ss-title{font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:12px;
       display:flex;align-items:center;gap:6px;}
-    .state-switcher-title span{background:var(--error);color:#fff;font-size:10px;padding:2px 6px;
-      border-radius:var(--r-full);}
-    .state-group{margin-bottom:12px;}
-    .state-group:last-child{margin-bottom:0;}
-    .state-group-label{font-size:12px;font-weight:600;color:var(--text-3);margin-bottom:6px;
-      padding-left:2px;}
-    .state-btns{display:flex;flex-wrap:wrap;gap:6px;}
-    .state-btn{padding:6px 12px;border-radius:var(--r-full);font-size:12px;font-weight:500;
+    .ss-title span{background:var(--error);color:#fff;font-size:10px;padding:2px 6px;
+      border-radius:var(--r-full);font-weight:500;}
+    .ss-group{margin-bottom:12px;}
+    .ss-group:last-child{margin-bottom:0;}
+    .ss-label{font-size:12px;font-weight:600;color:var(--text-3);margin-bottom:6px;padding-left:2px;}
+    .ss-btns{display:flex;flex-wrap:wrap;gap:6px;}
+    .ss-btn{padding:5px 10px;border-radius:var(--r-full);font-size:11px;font-weight:500;
       border:1px solid var(--border);background:#fff;color:var(--text-2);cursor:pointer;
       transition:all var(--tr);font-family:inherit;}
-    .state-btn:hover{border-color:var(--primary);color:var(--primary);}
-    .state-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
-    .state-btn.btn-red{border-color:var(--error);color:var(--error);}
-    .state-btn.btn-red:hover,.state-btn.btn-red.active{background:var(--error);color:#fff;}
-    .state-btn.btn-orange{border-color:var(--warning);color:var(--warning);}
-    .state-btn.btn-orange:hover,.state-btn.btn-orange.active{background:var(--warning);color:#fff;}
-    .state-btn.btn-green{border-color:var(--success);color:var(--success);}
-    .state-btn.btn-green:hover,.state-btn.btn-green.active{background:var(--success);color:#fff;}
-    .state-btn.btn-grey{border-color:var(--grey);color:var(--grey);}
-    .state-btn.btn-grey:hover,.state-btn.btn-grey.active{background:var(--grey);color:#fff;}
+    .ss-btn:hover{border-color:var(--primary);color:var(--primary);}
+    .ss-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+    .ss-btn.sb-red{border-color:rgba(245,63,63,0.3);color:var(--error);}
+    .ss-btn.sb-red:hover,.ss-btn.sb-red.active{background:var(--error);color:#fff;}
+    .ss-btn.sb-orange{border-color:rgba(255,125,0,0.3);color:var(--warning);}
+    .ss-btn.sb-orange:hover,.ss-btn.sb-orange.active{background:var(--warning);color:#fff;}
+    .ss-btn.sb-green{border-color:rgba(0,180,42,0.3);color:var(--success);}
+    .ss-btn.sb-green:hover,.ss-btn.sb-green.active{background:var(--success);color:#fff;}
+    .ss-btn.sb-grey{border-color:rgba(134,144,156,0.3);color:var(--grey);}
+    .ss-btn.sb-grey:hover,.ss-btn.sb-grey.active{background:var(--grey);color:#fff;}
 
     /* Toast */
     .toast{position:fixed;top:72px;left:50%;transform:translateX(-50%) translateY(-20px);
@@ -161,7 +167,6 @@
       transition:opacity .3s,transform .3s;pointer-events:none;white-space:nowrap;z-index:999;}
     .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
-    /* 脉冲动画 */
     @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
     .pulse{animation:pulse 1.5s ease-in-out infinite;}
   </style>
@@ -204,35 +209,35 @@
 
 <div class="page-content">
 
-  <!-- 状态切换器（原型演示用） -->
+  <!-- 状态切换器 -->
   <div class="state-switcher">
-    <div class="state-switcher-title">⚙️ 状态切换器 <span>演示</span></div>
-    <div class="state-group">
-      <div class="state-group-label">🔵 微信认证状态</div>
-      <div class="state-btns" id="wechatStateBtns">
-        <button class="state-btn active" onclick="setWechatState('AUDITING')">审核中</button>
-        <button class="state-btn btn-orange" onclick="setWechatState('LEGAL_CONFIRM')">待法人确认</button>
-        <button class="state-btn btn-orange" onclick="setWechatState('CONTACT_CONFIRM')">待确认联系</button>
-        <button class="state-btn btn-green" onclick="setWechatState('PASS')">审核通过</button>
-        <button class="state-btn btn-red" onclick="setWechatState('REJECT')">审核失败</button>
-        <button class="state-btn btn-red" onclick="setWechatState('APPLY_FAIL')">提交失败</button>
-        <button class="state-btn btn-grey" onclick="setWechatState('CANCELED')">已撤回</button>
-        <button class="state-btn btn-grey" onclick="setWechatState('FREEZE')">已冻结</button>
-        <button class="state-btn btn-grey" onclick="setWechatState('LOGGED')">已销户</button>
-        <button class="state-btn btn-grey" onclick="setWechatState('UNDEFINED')">未定义</button>
+    <div class="ss-title">⚙️ 状态切换器 <span>演示</span></div>
+    <div class="ss-group">
+      <div class="ss-label">微信认证状态（10种）</div>
+      <div class="ss-btns" id="wxBtns">
+        <button class="ss-btn active" onclick="setWx('AUDITING')">审核中</button>
+        <button class="ss-btn sb-orange" onclick="setWx('LEGAL_CONFIRM')">待法人确认</button>
+        <button class="ss-btn sb-orange" onclick="setWx('CONTACT_CONFIRM')">待确认联系</button>
+        <button class="ss-btn sb-green" onclick="setWx('PASS')">审核通过</button>
+        <button class="ss-btn sb-red" onclick="setWx('REJECT')">审核失败</button>
+        <button class="ss-btn sb-red" onclick="setWx('APPLY_FAIL')">提交失败</button>
+        <button class="ss-btn sb-grey" onclick="setWx('CANCELED')">已撤回</button>
+        <button class="ss-btn sb-grey" onclick="setWx('FREEZE')">已冻结</button>
+        <button class="ss-btn sb-grey" onclick="setWx('LOGGED')">已销户</button>
+        <button class="ss-btn sb-grey" onclick="setWx('UNDEFINED')">未定义</button>
       </div>
     </div>
-    <div class="state-group">
-      <div class="state-group-label">🔵 支付宝认证状态</div>
-      <div class="state-btns" id="alipayStateBtns">
-        <button class="state-btn active" onclick="setAlipayState('WAITTING')">审核中</button>
-        <button class="state-btn btn-orange" onclick="setAlipayState('EDITTING')">编辑中</button>
-        <button class="state-btn btn-orange" onclick="setAlipayState('CONFIRM_CONTACT')">待确认联系</button>
-        <button class="state-btn btn-orange" onclick="setAlipayState('CONFIRM_LEGALPERSON')">待账户验证</button>
-        <button class="state-btn btn-green" onclick="setAlipayState('PASSED')">审核通过</button>
-        <button class="state-btn btn-red" onclick="setAlipayState('REJECTED')">审核驳回</button>
-        <button class="state-btn btn-grey" onclick="setAlipayState('FREEZED')">已冻结</button>
-        <button class="state-btn btn-grey" onclick="setAlipayState('CANCELED')">已作废</button>
+    <div class="ss-group">
+      <div class="ss-label">支付宝认证状态（8种）</div>
+      <div class="ss-btns" id="aliBtns">
+        <button class="ss-btn active" onclick="setAli('WAITTING')">审核中</button>
+        <button class="ss-btn sb-orange" onclick="setAli('EDITTING')">编辑中</button>
+        <button class="ss-btn sb-orange" onclick="setAli('CONFIRM_CONTACT')">待确认联系</button>
+        <button class="ss-btn sb-orange" onclick="setAli('CONFIRM_LEGALPERSON')">待账户验证</button>
+        <button class="ss-btn sb-green" onclick="setAli('PASSED')">审核通过</button>
+        <button class="ss-btn sb-red" onclick="setAli('REJECTED')">审核驳回</button>
+        <button class="ss-btn sb-grey" onclick="setAli('FREEZED')">已冻结</button>
+        <button class="ss-btn sb-grey" onclick="setAli('CANCELED')">已作废</button>
       </div>
     </div>
   </div>
@@ -241,246 +246,284 @@
   <div class="tab-bar">
     <button class="tab-item active" id="tabWechat" onclick="switchTab('wechat')">
       <img src="assets/微信支付.svg" width="20" height="20" alt="微信">微信认证
-      <span class="tab-dot dot-waiting" id="dotWechat"></span>
+      <span class="tab-dot dot-waiting" id="dotWx"></span>
     </button>
     <button class="tab-item" id="tabAlipay" onclick="switchTab('alipay')">
       <img src="assets/支付宝支付.svg" width="20" height="20" alt="支付宝">支付宝认证
-      <span class="tab-dot dot-waiting" id="dotAlipay"></span>
+      <span class="tab-dot dot-waiting" id="dotAli"></span>
     </button>
   </div>
 
-  <!-- 微信认证面板 -->
+  <!-- 微信面板 -->
   <div class="tab-panel active" id="panelWechat">
-    <div class="auth-card" id="wechatCard">
-      <!-- JS 动态渲染 -->
-    </div>
+    <div class="auth-card" id="wxCard"></div>
   </div>
 
-  <!-- 支付宝认证面板 -->
+  <!-- 支付宝面板 -->
   <div class="tab-panel" id="panelAlipay">
-    <div class="auth-card" id="alipayCard">
-      <!-- JS 动态渲染 -->
-    </div>
+    <div class="auth-card" id="aliCard"></div>
   </div>
 
-</div>
-
-<!-- 底部 -->
-<div class="bottom-bar" id="bottomBar">
-  <div class="bottom-tech">由银盛提供技术支持</div>
 </div>
 
 <script>
-  // ===== 状态数据 =====
-  let wechatState = 'AUDITING';
-  let alipayState = 'WAITTING';
+  // ===== 状态 =====
+  let wxState = 'AUDITING';
+  let aliState = 'WAITTING';
 
-  // 微信状态配置
-  const WECHAT_STATES = {
-    AUDITING:        { type:'waiting', icon:'⏳', title:'等待微信认证中...', desc:'请使用微信扫描二维码完成商户主体认证', dot:'dot-waiting' },
-    LEGAL_CONFIRM:   { type:'action', icon:'👤', title:'待法人确认', desc:'法人需在微信端完成身份确认，请通知法人打开微信进行操作', action:'通知法人确认', dot:'dot-warning' },
-    CONTACT_CONFIRM: { type:'action', icon:'📞', title:'待确认联系信息', desc:'请在微信端确认您的联系信息是否正确', action:'去确认联系信息', dot:'dot-warning' },
-    PASS:            { type:'success', icon:'✅', title:'微信认证已通过', desc:'微信商户认证已通过，请完成支付宝认证', dot:'dot-success' },
-    REJECT:          { type:'fail', icon:'❌', title:'微信认证失败', desc:'微信商户认证未通过，请检查信息后重新提交', reason:'主体信息与微信支付要求不符', action:'重新提交', dot:'dot-error' },
-    APPLY_FAIL:      { type:'fail', icon:'⚠️', title:'提交审核失败', desc:'微信认证提交失败，请重新尝试提交', reason:'网络异常，提交超时', action:'重新提交', dot:'dot-error' },
-    CANCELED:        { type:'terminal', icon:'🚫', title:'认证已撤回', desc:'微信认证申请已被撤回，如需继续使用请重新申请', dot:'dot-grey' },
-    FREEZE:          { type:'terminal', icon:'🔒', title:'账户已冻结', desc:'微信商户账户已被冻结，请联系客服了解详情', dot:'dot-grey' },
-    LOGGED:          { type:'terminal', icon:'🏴', title:'账户已销户', desc:'微信商户账户已注销，如需重新开通请联系客服', dot:'dot-grey' },
-    UNDEFINED:       { type:'terminal', icon:'❓', title:'状态异常', desc:'微信认证状态异常，请联系客服处理', dot:'dot-grey' },
+  // ===== 微信状态配置 =====
+  const WX = {
+    AUDITING:        { ui:'scanning', dot:'dot-waiting' },
+    LEGAL_CONFIRM:   { ui:'action',  icon:'👤', title:'待法人确认', desc:'法人需在微信端完成身份确认操作，请通知法人打开微信进行确认。', dot:'dot-warning' },
+    CONTACT_CONFIRM: { ui:'action',  icon:'📞', title:'待确认联系信息', desc:'请在微信端确认您的联系信息是否正确，完成确认后返回本页面查询结果。', dot:'dot-warning' },
+    PASS:            { ui:'pass',    dot:'dot-success' },
+    REJECT:          { ui:'fail',    icon:'❌', title:'微信认证失败', reason:'主体信息与微信支付要求不符', dot:'dot-error' },
+    APPLY_FAIL:      { ui:'fail',    icon:'⚠️', title:'提交审核失败', reason:'网络异常，提交超时，请重新扫码', dot:'dot-error' },
+    CANCELED:        { ui:'terminal',icon:'🚫', title:'认证已撤回', desc:'微信认证申请已被撤回，如需继续使用请重新发起认证。', dot:'dot-grey' },
+    FREEZE:          { ui:'terminal',icon:'🔒', title:'账户已冻结', desc:'微信商户账户已被冻结，暂无法继续认证。', dot:'dot-grey' },
+    LOGGED:          { ui:'terminal',icon:'🏴', title:'账户已销户', desc:'微信商户账户已注销，无法继续认证。', dot:'dot-grey' },
+    UNDEFINED:       { ui:'terminal',icon:'❓', title:'状态异常', desc:'微信认证状态异常，请稍后再试。', dot:'dot-grey' },
   };
 
-  // 支付宝状态配置
-  const ALIPAY_STATES = {
-    WAITTING:            { type:'waiting', icon:'⏳', title:'等待支付宝认证中...', desc:'请使用支付宝扫描二维码完成商家认证', dot:'dot-waiting' },
-    EDITTING:            { type:'action', icon:'✏️', title:'信息编辑中', desc:'支付宝认证信息可修改，请在支付宝端完成编辑', action:'去编辑信息', dot:'dot-warning' },
-    CONFIRM_CONTACT:     { type:'action', icon:'📞', title:'待确认联系信息', desc:'请在支付宝端确认您的联系信息是否正确', action:'去确认联系信息', dot:'dot-warning' },
-    CONFIRM_LEGALPERSON: { type:'action', icon:'👤', title:'待账户验证', desc:'法人需在支付宝端完成账户验证，请通知法人操作', action:'通知法人验证', dot:'dot-warning' },
-    PASSED:              { type:'success', icon:'✅', title:'支付宝认证已通过', desc:'支付宝商家认证已通过，请完成微信认证', dot:'dot-success' },
-    REJECTED:            { type:'fail', icon:'❌', title:'支付宝认证驳回', desc:'支付宝商家认证被驳回，请检查信息后重新提交', reason:'营业执照信息不匹配', action:'重新提交', dot:'dot-error' },
-    FREEZED:             { type:'terminal', icon:'🔒', title:'账户已冻结', desc:'支付宝商户账户已被冻结，请联系客服了解详情', dot:'dot-grey' },
-    CANCELED:            { type:'terminal', icon:'🚫', title:'认证已作废', desc:'支付宝认证申请已作废，如需继续使用请重新申请', dot:'dot-grey' },
+  // ===== 支付宝状态配置 =====
+  const ALI = {
+    WAITTING:            { ui:'scanning', dot:'dot-waiting' },
+    EDITTING:            { ui:'action',  icon:'✏️', title:'信息编辑中', desc:'支付宝认证信息可修改，请在支付宝端完成编辑后返回本页面查询结果。', dot:'dot-warning' },
+    CONFIRM_CONTACT:     { ui:'action',  icon:'📞', title:'待确认联系信息', desc:'请在支付宝端确认您的联系信息是否正确，完成确认后返回本页面查询结果。', dot:'dot-warning' },
+    CONFIRM_LEGALPERSON: { ui:'action',  icon:'👤', title:'待账户验证', desc:'法人需在支付宝端完成账户验证操作，请通知法人完成验证。', dot:'dot-warning' },
+    PASSED:              { ui:'pass',    dot:'dot-success' },
+    REJECTED:            { ui:'fail',    icon:'❌', title:'支付宝认证驳回', reason:'营业执照信息与支付宝要求不匹配', dot:'dot-error' },
+    FREEZED:             { ui:'terminal',icon:'🔒', title:'账户已冻结', desc:'支付宝商户账户已被冻结，暂无法继续认证。', dot:'dot-grey' },
+    CANCELED:            { ui:'terminal',icon:'🚫', title:'认证已作废', desc:'支付宝认证申请已作废，如需继续使用请重新发起认证。', dot:'dot-grey' },
   };
 
-  // ===== 渲染逻辑 =====
-  function renderWaiting(config, platform) {
-    const svgIcon = platform === 'wechat' ? '微信支付.svg' : '支付宝支付.svg';
-    const name = platform === 'wechat' ? '微信' : '支付宝';
-    const emoji = platform === 'wechat' ? '📱' : '💙';
+  // ===== 渲染 =====
+  function htmlScanning(platform) {
+    const isWx = platform === 'wechat';
+    const svg = isWx ? '微信支付.svg' : '支付宝支付.svg';
+    const name = isWx ? '微信' : '支付宝';
+    const emoji = isWx ? '📱' : '💙';
     return `
-      <div class="auth-icon" style="display:flex;align-items:center;justify-content:center;">
-        <img src="assets/${svgIcon}" alt="${name}" width="64" height="64">
+      <div style="display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+        <img src="assets/${svg}" alt="${name}" width="56" height="56">
       </div>
-      <div class="auth-title">${name}扫码认证</div>
-      <div class="auth-desc">请使用${name}扫描下方二维码<br/>完成商户主体认证</div>
+      <div style="font-size:20px;font-weight:600;color:var(--text-1);margin-bottom:8px;">${name}扫码认证</div>
+      <div style="font-size:14px;color:var(--text-3);margin-bottom:24px;line-height:1.6;">
+        请使用${name}扫描下方二维码<br/>完成商户主体认证
+      </div>
       <div class="qr-box">
         <div class="qr-placeholder pulse">${emoji}</div>
-        <div class="qr-expire">有效期：5分钟</div>
+        <div class="qr-expire">有效期 5 分钟</div>
       </div>
       <div class="refresh-btn" onclick="refreshQR('${platform}')">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7a6 6 0 1 0 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M1 1v4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         刷新二维码
       </div>
-      <div class="status-box s-blue">
-        <div class="s-icon pulse">${config.icon}</div>
-        <div class="s-body">
-          <div class="s-title">${config.title}</div>
-          <div class="s-desc">${config.desc}</div>
-        </div>
+      <div class="action-btns">
+        <button class="btn btn-primary" onclick="queryResult('${platform}')">已完成认证</button>
       </div>`;
   }
 
-  function renderAction(config) {
+  function htmlAction(cfg) {
     return `
-      <div class="result-icon">${config.icon}</div>
-      <div class="result-title" style="color:var(--warning);">${config.title}</div>
-      <div class="result-desc">${config.desc}</div>
-      <div class="status-box s-orange">
-        <div class="s-icon">${config.icon}</div>
-        <div class="s-body">
-          <div class="s-title">${config.title}</div>
-          <div class="s-desc">${config.desc}</div>
-          <div class="s-action">
-            <button class="s-btn s-btn-blue" onclick="showToast('正在跳转...')">${config.action}</button>
+      <div class="result-area">
+        <div class="result-icon">${cfg.icon}</div>
+        <div class="result-title t-warning">${cfg.title}</div>
+        <div class="result-desc">${cfg.desc}</div>
+        <div class="info-box ib-orange">
+          <div class="ib-icon">💡</div>
+          <div class="ib-body">
+            <div class="ib-title">需要您在其他端操作</div>
+            <div class="ib-desc">完成操作后，请返回本页面点击「已完成认证」查询最新结果</div>
           </div>
         </div>
-      </div>`;
-  }
-
-  function renderSuccess(config, platform) {
-    const other = platform === 'wechat' ? '支付宝' : '微信';
-    const otherPassed = platform === 'wechat'
-      ? alipayState === 'PASSED'
-      : wechatState === 'PASS';
-    const allPassed = otherPassed;
-    return `
-      <div class="result-icon">🎉</div>
-      <div class="result-title" style="color:var(--success);">${config.title}</div>
-      <div class="result-desc">${allPassed
-        ? '恭喜！微信和支付宝认证均已通过，即将进入成功页面'
-        : config.desc}</div>
-      <div class="status-box s-green">
-        <div class="s-icon">✅</div>
-        <div class="s-body">
-          <div class="s-title">${config.title}</div>
-          <div class="s-desc">${allPassed
-            ? '所有认证已完成，系统将自动跳转'
-            : `${other}认证还未完成，请切换到${other}Tab继续认证`}</div>
+        <div class="action-btns">
+          <button class="btn btn-primary" onclick="queryResult('${getCurrentPlatform()}')">已完成认证</button>
         </div>
       </div>`;
   }
 
-  function renderFail(config) {
-    return `
-      <div class="result-icon">${config.icon}</div>
-      <div class="result-title" style="color:var(--error);">${config.title}</div>
-      <div class="result-desc">${config.desc}</div>
-      ${config.reason ? `<div style="background:var(--error-bg);border-radius:var(--r-md);padding:12px 16px;margin-bottom:20px;text-align:left;">
-        <div style="font-size:12px;color:var(--error);font-weight:500;margin-bottom:4px;">失败原因</div>
-        <div style="font-size:13px;color:var(--text-2);">${config.reason}</div>
-      </div>` : ''}
-      <div class="status-box s-red">
-        <div class="s-icon">${config.icon}</div>
-        <div class="s-body">
-          <div class="s-title">${config.title}</div>
-          <div class="s-desc">${config.desc}</div>
-          <div class="s-action" style="display:flex;gap:8px;flex-wrap:wrap;">
-            <button class="s-btn s-btn-red" onclick="showToast('正在跳转重新提交...')">${config.action || '重新提交'}</button>
-            <button class="s-btn s-btn-outline" onclick="showToast('客服电话：400-XXX-XXXX')">联系客服</button>
+  function htmlPass(platform) {
+    const isWx = platform === 'wechat';
+    const name = isWx ? '微信' : '支付宝';
+    const otherName = isWx ? '支付宝' : '微信';
+    const otherPassed = isWx ? aliState === 'PASSED' : wxState === 'PASS';
+    const allDone = otherPassed;
+
+    let bothHtml = '';
+    if (allDone) {
+      bothHtml = `
+        <div class="both-status">
+          <div class="both-item b-pass">
+            <div class="bi-icon">✅</div>
+            <div class="bi-label">微信认证</div>
+            <div class="bi-status">已通过</div>
+          </div>
+          <div class="both-item b-pass">
+            <div class="bi-icon">✅</div>
+            <div class="bi-label">支付宝认证</div>
+            <div class="bi-status">已通过</div>
           </div>
         </div>
+        <div class="action-btns">
+          <button class="btn btn-primary" onclick="goSuccess()">进入成功页面</button>
+        </div>`;
+    } else {
+      bothHtml = `
+        <div class="both-status">
+          <div class="both-item b-pass">
+            <div class="bi-icon">${isWx ? '✅' : '⏳'}</div>
+            <div class="bi-label">微信认证</div>
+            <div class="bi-status">${isWx ? '已通过' : '待认证'}</div>
+          </div>
+          <div class="both-item ${isWx ? 'b-wait' : 'b-pass'}">
+            <div class="bi-icon">${isWx ? '⏳' : '✅'}</div>
+            <div class="bi-label">支付宝认证</div>
+            <div class="bi-status">${isWx ? '待认证' : '已通过'}</div>
+          </div>
+        </div>
+        <div class="info-box ib-orange" style="margin-top:16px;">
+          <div class="ib-icon">💡</div>
+          <div class="ib-body">
+            <div class="ib-title">${otherName}认证尚未完成</div>
+            <div class="ib-desc">请切换到${otherName}认证Tab完成扫码认证</div>
+          </div>
+        </div>`;
+    }
+
+    return `
+      <div class="result-area">
+        <div class="result-icon">🎉</div>
+        <div class="result-title t-success">${name}认证已通过</div>
+        <div class="result-desc">${allDone
+          ? '恭喜！微信和支付宝认证均已通过，入驻流程即将完成。'
+          : name + '认证已通过，还需完成' + otherName + '认证。'}</div>
+        ${bothHtml}
       </div>`;
   }
 
-  function renderTerminal(config) {
+  function htmlFail(cfg, platform) {
+    const name = platform === 'wechat' ? '微信' : '支付宝';
     return `
-      <div class="result-icon">${config.icon}</div>
-      <div class="result-title" style="color:var(--grey);">${config.title}</div>
-      <div class="result-desc">${config.desc}</div>
-      <div class="status-box s-grey">
-        <div class="s-icon">${config.icon}</div>
-        <div class="s-body">
-          <div class="s-title">${config.title}</div>
-          <div class="s-desc">${config.desc}</div>
-          <div class="s-action">
-            <button class="s-btn s-btn-grey" onclick="showToast('客服电话：400-XXX-XXXX')">联系客服</button>
+      <div class="result-area">
+        <div class="result-icon">${cfg.icon}</div>
+        <div class="result-title t-error">${cfg.title}</div>
+        <div class="result-desc">${name}认证未通过，请查看失败原因后重新扫码认证。</div>
+        ${cfg.reason ? `
+        <div class="reason-box">
+          <div class="reason-label">失败原因</div>
+          <div class="reason-text">${cfg.reason}</div>
+        </div>` : ''}
+        <div class="action-btns">
+          <button class="btn btn-error" onclick="rescan('${platform}')">重新扫码认证</button>
+        </div>
+      </div>`;
+  }
+
+  function htmlTerminal(cfg) {
+    return `
+      <div class="result-area">
+        <div class="result-icon">${cfg.icon}</div>
+        <div class="result-title t-grey">${cfg.title}</div>
+        <div class="result-desc">${cfg.desc}</div>
+        <div class="info-box ib-grey">
+          <div class="ib-icon">ℹ️</div>
+          <div class="ib-body">
+            <div class="ib-title">${cfg.title}</div>
+            <div class="ib-desc">${cfg.desc}</div>
           </div>
         </div>
       </div>`;
   }
 
   function renderCard(platform, state) {
-    const config = platform === 'wechat' ? WECHAT_STATES[state] : ALIPAY_STATES[state];
-    if (!config) return '<div>未知状态</div>';
-    switch (config.type) {
-      case 'waiting':  return renderWaiting(config, platform);
-      case 'action':   return renderAction(config);
-      case 'success':  return renderSuccess(config, platform);
-      case 'fail':     return renderFail(config);
-      case 'terminal': return renderTerminal(config);
-      default:         return '<div>未知状态</div>';
+    const cfg = platform === 'wechat' ? WX[state] : ALI[state];
+    if (!cfg) return '';
+    switch (cfg.ui) {
+      case 'scanning': return htmlScanning(platform);
+      case 'action':   return htmlAction(cfg);
+      case 'pass':     return htmlPass(platform);
+      case 'fail':     return htmlFail(cfg, platform);
+      case 'terminal': return htmlTerminal(cfg);
+      default:         return '';
     }
   }
 
   // ===== 更新界面 =====
+  let currentTab = 'wechat';
+  function getCurrentPlatform() { return currentTab; }
+
   function updateUI() {
-    // 渲染卡片
-    document.getElementById('wechatCard').innerHTML = renderCard('wechat', wechatState);
-    document.getElementById('alipayCard').innerHTML = renderCard('alipay', alipayState);
+    document.getElementById('wxCard').innerHTML = renderCard('wechat', wxState);
+    document.getElementById('aliCard').innerHTML = renderCard('alipay', aliState);
 
-    // 更新 Tab 小点
-    const wDot = WECHAT_STATES[wechatState]?.dot || 'dot-waiting';
-    const aDot = ALIPAY_STATES[alipayState]?.dot || 'dot-waiting';
-    document.getElementById('dotWechat').className = 'tab-dot ' + wDot;
-    document.getElementById('dotAlipay').className = 'tab-dot ' + aDot;
-
-    // 检查是否都通过 → 自动跳转
-    if (wechatState === 'PASS' && alipayState === 'PASSED') {
-      setTimeout(() => {
-        showToast('🎉 所有认证已通过，正在跳转成功页面...');
-        setTimeout(() => {
-          window.location.href = 'yinsheng-onboarding-success.html';
-        }, 2000);
-      }, 500);
-    }
+    // Tab 小点
+    document.getElementById('dotWx').className = 'tab-dot ' + (WX[wxState]?.dot || 'dot-waiting');
+    document.getElementById('dotAli').className = 'tab-dot ' + (ALI[aliState]?.dot || 'dot-waiting');
   }
 
-  // ===== 状态切换 =====
-  function setWechatState(state) {
-    wechatState = state;
-    // 更新按钮状态
-    document.querySelectorAll('#wechatStateBtns .state-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-    updateUI();
-  }
-
-  function setAlipayState(state) {
-    alipayState = state;
-    document.querySelectorAll('#alipayStateBtns .state-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-    updateUI();
-  }
-
-  // ===== Tab 切换 =====
+  // ===== 交互 =====
   function switchTab(tab) {
+    currentTab = tab;
     document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(el => el.classList.remove('active'));
-    document.getElementById('tab' + capitalize(tab)).classList.add('active');
-    document.getElementById('panel' + capitalize(tab)).classList.add('active');
+    document.getElementById('tab' + cap(tab)).classList.add('active');
+    document.getElementById('panel' + cap(tab)).classList.add('active');
+  }
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function setWx(state) {
+    wxState = state;
+    document.querySelectorAll('#wxBtns .ss-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    updateUI();
   }
 
-  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function setAli(state) {
+    aliState = state;
+    document.querySelectorAll('#aliBtns .ss-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    updateUI();
+  }
 
-  // ===== 工具 =====
+  function refreshQR(platform) {
+    showToast('🔄 已刷新' + (platform === 'wechat' ? '微信' : '支付宝') + '二维码');
+  }
+
+  // 点击「已完成认证」→ 查询结果（演示：弹提示，实际由后端返回状态）
+  function queryResult(platform) {
+    showToast('📡 正在查询认证结果...');
+  }
+
+  // 重新扫码 → 回到扫码状态
+  function rescan(platform) {
+    showToast('🔄 已重新生成二维码，请扫码认证');
+    if (platform === 'wechat') {
+      wxState = 'AUDITING';
+      document.querySelectorAll('#wxBtns .ss-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('#wxBtns .ss-btn').classList.add('active');
+    } else {
+      aliState = 'WAITTING';
+      document.querySelectorAll('#aliBtns .ss-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('#aliBtns .ss-btn').classList.add('active');
+    }
+    updateUI();
+  }
+
+  // 双方通过 → 跳成功页
+  function goSuccess() {
+    showToast('🎉 认证全部通过！正在跳转...');
+    setTimeout(() => {
+      window.location.href = 'yinsheng-onboarding-success.html';
+    }, 1500);
+  }
+
   function showToast(msg, d = 2500) {
     const t = document.getElementById('toast');
     t.textContent = msg;
     t.classList.add('show');
     clearTimeout(t._t);
     t._t = setTimeout(() => t.classList.remove('show'), d);
-  }
-
-  function refreshQR(type) {
-    showToast('🔄 刷新' + (type === 'wechat' ? '微信' : '支付宝') + '二维码...');
   }
 
   // 初始化
