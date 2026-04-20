@@ -102,6 +102,10 @@
       background:#fff;height:44px;display:flex;align-items:center;overflow:hidden;
       transition:border-color var(--tr);}
     .input-wrap:focus-within{border-color:var(--primary);}
+    .long-term-label{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--text-2);cursor:pointer;white-space:nowrap;user-select:none;}
+    .long-term-label input[type="checkbox"]{width:16px;height:16px;accent-color:var(--primary);cursor:pointer;}
+    .long-term-label input[type="checkbox"]:checked + span{color:var(--primary);}
+    .long-term-tip{font-size:11px;color:var(--text-3);white-space:nowrap;}
     .input-wrap select{appearance:none;border:none;outline:none;background:transparent;
       font-size:14px;color:var(--text-1);padding:0 32px 0 12px;height:100%;width:100%;
       background-image:url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%2386909C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -309,30 +313,46 @@
     </div>
     <div class="field-row field-row-2">
       <div class="field-group">
-        <div class="field-label"><span class="required">*</span>法人邮箱</div>
-        <div class="input-wrap">
-          <input class="field-input" type="email" placeholder="请输入邮箱地址" maxlength="50" id="legalEmail"/>
-        </div>
-      </div>
-      <div class="field-group">
         <div class="field-label"><span class="required">*</span>法人职业</div>
         <div class="input-wrap">
           <input class="field-input" type="text" placeholder="请输入职业" maxlength="30" id="legalOccupation"/>
         </div>
       </div>
     </div>
-    <div class="field-row">
-      <div class="field-group" style="margin-bottom:0">
-        <div class="field-label"><span class="required">*</span>法人地址</div>
-        <div class="input-wrap">
-          <input class="field-input" type="text" placeholder="请输入详细地址" maxlength="100" id="legalAddress"/>
-        </div>
+  </div>
+
+  <!-- ==================== 二、商户相关 ==================== -->
+  <div class="section-title">二、商户相关</div>
+  <div class="field-row field-row-2">
+    <div class="field-group">
+      <div class="field-label"><span class="required">*</span>商户名称</div>
+      <div class="input-wrap">
+        <input class="field-input" type="text" placeholder="请输入" maxlength="50" id="merchantName"/>
+      </div>
+    </div>
+    <div class="field-group">
+      <div class="field-label"><span class="required">*</span>商户简称</div>
+      <div class="input-wrap">
+        <input class="field-input" type="text" placeholder="请输入" maxlength="30" id="merchantShortName"/>
+      </div>
+    </div>
+  </div>
+  <div class="field-row field-row-2">
+    <div class="field-group">
+      <div class="field-label"><span class="required">*</span>商户类型</div>
+      <div class="input-wrap">
+        <select class="field-select" id="merchantType" style="padding:0 12px;">
+          <option value="">请选择</option>
+          <option value="micro">小微商户</option>
+          <option value="individual">个体工商户</option>
+          <option value="enterprise">企业商户</option>
+        </select>
       </div>
     </div>
   </div>
 
-  <!-- ==================== 二、营业执照 ==================== -->
-  <div class="section-title">二、营业执照</div>
+  <!-- ==================== 三、营业执照 ==================== -->
+  <div class="section-title">三、营业执照</div>
   <!-- 营业执照照片（先上传） -->
   <div class="upload-section">
     <div class="field-label" style="margin-bottom:10px;"><span class="required">*</span>营业执照照片</div>
@@ -354,9 +374,19 @@
         </div>
       </div>
       <div class="field-group">
-        <div class="field-label"><span class="required">*</span>截止日期（开始时间）</div>
+        <div class="field-label"><span class="required">*</span>开始日期</div>
         <div class="input-wrap">
-          <input class="field-input" type="date" id="licenseExpireDate" style="padding:0 12px;"/>
+          <input class="field-input" type="date" id="licenseStartDate" style="padding:0 12px;"/>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label"><span class="required">*</span>截止日期</div>
+        <div class="input-wrap" style="display:flex;align-items:center;gap:10px;">
+          <input class="field-input" type="date" id="licenseExpireDate" style="padding:0 12px;flex:1;" placeholder="年/月/日"/>
+          <label class="long-term-label">
+            <input type="checkbox" id="isLongTerm" onchange="toggleLongTerm()"/> 长期
+          </label>
+          <span class="long-term-tip">无固定期限填 2999-12-31</span>
         </div>
       </div>
     </div>
@@ -387,7 +417,7 @@
   </div>
 
   <!-- ==================== 三、结算账户 ==================== -->
-  <div class="section-title">三、结算账户</div>
+  <div class="section-title">四、结算账户</div>
   <div class="form-section">
     <div class="field-row field-row-2">
       <div class="field-group">
@@ -473,7 +503,7 @@
   </div>
 
   <!-- ==================== 四、联系人 ==================== -->
-  <div class="section-title">四、联系人</div>
+  <div class="section-title">五、联系人</div>
   <div class="form-section">
     <div class="field-row field-row-2">
       <div class="field-group">
@@ -500,7 +530,7 @@
   </div>
 
   <!-- ==================== 五、其他 ==================== -->
-  <div class="section-title">五、其他</div>
+  <div class="section-title">六、其他</div>
   <div class="form-section">
     <div class="field-row field-row-2">
       <div class="field-group">
@@ -612,17 +642,32 @@
   function syncContactFromLegal() {
     const name = document.getElementById('legalName').value.trim();
     const idCard = document.getElementById('legalIdCard').value.trim();
-    const address = document.getElementById('legalAddress').value.trim();
 
     document.getElementById('contactName').value = name;
     document.getElementById('contactIdCard').value = idCard;
-    document.getElementById('contactAddress').value = address;
   }
 
   // 监听法人关键字段变化
-  ['legalName', 'legalIdCard', 'legalAddress'].forEach(id => {
+  ['legalName', 'legalIdCard'].forEach(id => {
     document.getElementById(id).addEventListener('input', syncContactFromLegal);
   });
+
+  // ====== 长期/无固定期限切换 ======
+  function toggleLongTerm() {
+    const checked = document.getElementById('isLongTerm').checked;
+    const expireInput = document.getElementById('licenseExpireDate');
+    if (checked) {
+      expireInput.value = '2999-12-31';
+      expireInput.disabled = true;
+      expireInput.style.opacity = '0.5';
+      expireInput.style.background = 'var(--grey-bg)';
+    } else {
+      expireInput.value = '';
+      expireInput.disabled = false;
+      expireInput.style.opacity = '';
+      expireInput.style.background = '';
+    }
+  }
 
   // ====== 结算账户卡类型联动提示 ======
   function onSettleCardTypeChange() {
@@ -646,24 +691,28 @@
     if (!document.getElementById('legalIdType').value) { showToast('请选择法人证件类型'); return false; }
     if (!document.getElementById('legalIdExpire').value) { showToast('请选择证件有效期'); return false; }
     if (!document.getElementById('legalGender').value) { showToast('请选择法人性别'); return false; }
-    if (!document.getElementById('legalEmail').value.trim()) { showToast('请填写法人邮箱'); return false; }
     if (!document.getElementById('legalOccupation').value.trim()) { showToast('请填写法人职业'); return false; }
-    if (!document.getElementById('legalAddress').value.trim()) { showToast('请填写法人地址'); return false; }
 
     // 法人证件照片
     if (!uploadState.legalFront || !uploadState.legalBack || !uploadState.legalHand) {
       showToast('请上传法人证件正反面及手持照'); return false;
     }
 
-    // 二、营业执照
+    // 二、商户相关
+    if (!document.getElementById('merchantName').value.trim()) { showToast('请填写商户名称'); return false; }
+    if (!document.getElementById('merchantShortName').value.trim()) { showToast('请填写商户简称'); return false; }
+    if (!document.getElementById('merchantType').value) { showToast('请选择商户类型'); return false; }
+
+    // 三、营业执照
     if (!document.getElementById('licenseNo').value.trim()) { showToast('请填写营业执照编号'); return false; }
     if (!document.getElementById('licenseName').value.trim()) { showToast('请填写营业执照名称'); return false; }
     if (!document.getElementById('regAddress').value.trim()) { showToast('请填写注册地址'); return false; }
     if (!document.getElementById('bizAddress').value.trim()) { showToast('请填写经营地址'); return false; }
+    if (!document.getElementById('licenseStartDate').value) { showToast('请选择开始日期'); return false; }
     if (!document.getElementById('licenseExpireDate').value) { showToast('请选择截止日期'); return false; }
     if (!uploadState.licensePhoto) { showToast('请上传营业执照照片'); return false; }
 
-    // 三、结算账户
+    // 四、结算账户
     if (!document.getElementById('settleCardType').value) { showToast('请选择结算账户卡类型'); return false; }
     if (!document.getElementById('settleCardNo').value.trim()) { showToast('请填写结算账户卡号'); return false; }
     if (!document.getElementById('settleAccountName').value.trim()) { showToast('请填写结算账户户名'); return false; }
@@ -674,9 +723,9 @@
       showToast('请上传结算账户银行卡图片'); return false;
     }
 
-    // 四、联系人（姓名/证件号/地址自动同步，无需手动校验）
+    // 五、联系人（姓名/证件号/地址自动同步，无需手动校验）
 
-    // 五、其他
+    // 六、其他
     if (!document.getElementById('locationCity').value.trim()) { showToast('请填写所在省市'); return false; }
     if (!document.getElementById('mccCode').value.trim()) { showToast('请填写MCC码'); return false; }
 
