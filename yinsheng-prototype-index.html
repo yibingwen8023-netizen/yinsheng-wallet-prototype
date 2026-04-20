@@ -123,7 +123,7 @@
   <div class="hero-sub">完整用户注册与钱包入驻流程<br/>UI 交互原型设计稿</div>
   <div class="hero-tag">
     <span class="hero-dot"></span>
-    13 个页面原型 · 个人6步 / 商户5步 · 可交互演示
+    14 个页面原型 · 个人6步 / 商户4步 · 可交互演示
   </div>
 </div>
 
@@ -181,7 +181,7 @@
   <!-- 商户入驻流程 -->
   <div style="font-size:12px;color:#86909C;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
     <span style="font-weight:600;color:#4E5969;">🏢 商户账户</span>
-    <span>5步流程</span>
+    <span>4步流程</span>
   </div>
   <div class="flow-steps">
     <div class="flow-step" onclick="location.href='yinsheng-account-type.html'">
@@ -204,7 +204,7 @@
       <div class="flow-step-label">签约</div>
     </div>
     <div class="flow-arrow">›</div>
-    <div class="flow-step" onclick="location.href='yinsheng-merchant-wechat.html'">
+    <div class="flow-step" onclick="location.href='yinsheng-merchant-auth.html'">
       <div class="flow-step-dot" style="background:#E8FFEA;">💚</div>
       <div class="flow-step-label">微信/支付宝认证</div>
     </div>
@@ -219,7 +219,7 @@
 <!-- 页面列表 -->
 <div class="section-title">
   全部页面
-  <span class="section-badge">13 个</span>
+  <span class="section-badge">14 个</span>
 </div>
 
 <!-- 商户入驻 - 新增 -->
@@ -531,7 +531,7 @@
             <div class="page-card-icon" style="background:#FFF7E8;">📄</div>
             <div>
               <div class="page-card-name">商户入驻 · 填写信息</div>
-              <div class="page-card-step">步骤 1/5</div>
+              <div class="page-card-step">步骤 1/4</div>
             </div>
           </div>
           <span class="page-card-badge" style="background:#FFF7E8;color:#FF7D00;">新增</span>
@@ -547,8 +547,8 @@
     </div>
   </a>
 
-  <!-- 商户 - 微信认证 -->
-  <a class="page-card" href="yinsheng-merchant-wechat.html">
+  <!-- 商户 - 微信/支付宝认证（合并页） -->
+  <a class="page-card" href="yinsheng-merchant-auth.html">
     <div class="page-card-inner">
       <div class="page-card-stripe" style="background:#00C250;"></div>
       <div class="page-card-content">
@@ -556,43 +556,18 @@
           <div class="page-card-left">
             <div class="page-card-icon" style="background:#E8FFF0;">💚</div>
             <div>
-              <div class="page-card-name">商户入驻 · 微信认证</div>
-              <div class="page-card-step">步骤 4/5</div>
+              <div class="page-card-name">商户入驻 · 微信/支付宝认证</div>
+              <div class="page-card-step">步骤 4/4 · Tab切换</div>
             </div>
           </div>
-          <span class="page-card-badge" style="background:#E8FFF0;color:#00C250;">新增</span>
+          <span class="page-card-badge" style="background:#FFF7E8;color:#FF7D00;">新增</span>
         </div>
-        <div class="page-card-desc">扫码完成微信商户主体认证，二维码有效期5分钟，支持刷新，等待认证状态展示。</div>
+        <div class="page-card-desc">微信/支付宝二合一认证页，Tab切换选其一扫码，认证完成后跳转入驻成功页。</div>
         <div class="page-card-features">
-          <span class="feature-tag">二维码扫码</span>
+          <span class="feature-tag">Tab切换</span>
           <span class="feature-tag">微信认证</span>
-          <span class="feature-tag">脉冲动画</span>
-          <span class="feature-tag">刷新二维码</span>
-        </div>
-      </div>
-    </div>
-  </a>
-
-  <!-- 商户 - 支付宝认证 -->
-  <a class="page-card" href="yinsheng-merchant-alipay.html">
-    <div class="page-card-inner">
-      <div class="page-card-stripe" style="background:#1677FF;"></div>
-      <div class="page-card-content">
-        <div class="page-card-top">
-          <div class="page-card-left">
-            <div class="page-card-icon" style="background:#EEF3FF;">💙</div>
-            <div>
-              <div class="page-card-name">商户入驻 · 支付宝认证</div>
-              <div class="page-card-step">步骤 5/5 · 终态</div>
-            </div>
-          </div>
-          <span class="page-card-badge" style="background:#EEF3FF;color:#1677FF;">新增</span>
-        </div>
-        <div class="page-card-desc">扫码完成支付宝商家认证，二维码有效期5分钟，支持刷新，完成后跳转入驻成功页。</div>
-        <div class="page-card-features">
-          <span class="feature-tag">二维码扫码</span>
           <span class="feature-tag">支付宝认证</span>
-          <span class="feature-tag">脉冲动画</span>
+          <span class="feature-tag">二维码扫码</span>
           <span class="feature-tag">入驻成功</span>
         </div>
       </div>
