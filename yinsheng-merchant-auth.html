@@ -8,6 +8,9 @@
     :root {
       --primary:#165DFF; --primary-light:#4080FF; --primary-bg:#EEF3FF; --primary-pale:#D6E4FF;
       --success:#00B42A; --success-bg:#E8FFEA;
+      --warning:#FF7D00; --warning-bg:#FFF7E8;
+      --error:#F53F3F; --error-bg:#FFECE8;
+      --grey:#86909C; --grey-bg:#F2F3F5;
       --text-1:#1D2129; --text-2:#4E5969; --text-3:#86909C; --text-dis:#C9CDD4;
       --border:#E5E6EB; --bg:#F2F3F5; --card:#FFFFFF;
       --r-sm:6px; --r-md:10px; --r-lg:16px; --r-full:9999px;
@@ -16,7 +19,7 @@
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",Arial,sans-serif;
-      background:var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased;padding-bottom:140px;}
+      background:var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased;padding-bottom:100px;}
 
     /* 顶部导航 */
     .nav-bar{background:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;
@@ -25,7 +28,7 @@
     .nav-title{font-size:17px;font-weight:600;color:var(--text-1);}
     .nav-step{font-size:14px;color:var(--primary);font-weight:500;}
 
-    /* 步骤条（4步） */
+    /* 步骤条 */
     .step-bar{background:#fff;padding:20px 16px 16px;border-bottom:1px solid var(--border);}
     .step-list{display:flex;align-items:flex-start;justify-content:space-between;position:relative;}
     .step-list::before{content:'';position:absolute;top:14px;left:20px;right:20px;height:2px;background:#E5E6EB;z-index:0;}
@@ -45,98 +48,111 @@
     .page-content{max-width:520px;margin:0 auto;padding:20px 16px;}
 
     /* ===== Tab 切换 ===== */
-    .tab-bar{
-      display:flex;
-      background:#fff;
-      border-radius:var(--r-lg);
-      padding:4px;
-      margin-bottom:16px;
-      box-shadow:var(--shadow-card);
-      border:1px solid var(--border);
-    }
-    .tab-item{
-      flex:1;
-      height:44px;
-      border-radius:var(--r-md);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:6px;
-      font-size:14px;
-      font-weight:500;
-      color:var(--text-3);
-      cursor:pointer;
-      transition:all var(--tr);
-      border:none;
-      background:transparent;
-    }
-    .tab-item.active{
-      background:var(--primary);
-      color:#fff;
-      box-shadow:0 2px 8px rgba(22,93,255,.3);
-    }
+    .tab-bar{display:flex;background:#fff;border-radius:var(--r-lg);padding:4px;margin-bottom:16px;
+      box-shadow:var(--shadow-card);border:1px solid var(--border);}
+    .tab-item{flex:1;height:44px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;
+      gap:6px;font-size:14px;font-weight:500;color:var(--text-3);cursor:pointer;transition:all var(--tr);
+      border:none;background:transparent;position:relative;}
+    .tab-item.active{background:var(--primary);color:#fff;box-shadow:0 2px 8px rgba(22,93,255,.3);}
     .tab-item:not(.active):hover{background:var(--primary-bg);}
+    /* Tab 上的状态小点 */
+    .tab-dot{width:8px;height:8px;border-radius:50%;position:absolute;top:8px;right:12px;}
+    .tab-dot.dot-waiting{background:var(--primary);}
+    .tab-dot.dot-success{background:var(--success);}
+    .tab-dot.dot-error{background:var(--error);}
+    .tab-dot.dot-warning{background:var(--warning);}
+    .tab-dot.dot-grey{background:var(--grey);}
 
     /* 认证卡片 */
     .auth-card{background:#fff;border-radius:var(--r-lg);padding:32px 20px;text-align:center;
-      box-shadow:var(--shadow-card);}
-    .auth-icon{font-size:64px;margin-bottom:20px;}
+      box-shadow:var(--shadow-card);transition:all var(--tr);}
+    .auth-icon{font-size:64px;margin-bottom:20px;line-height:1;}
+    .auth-icon img{width:64px;height:64px;}
     .auth-title{font-size:20px;font-weight:600;color:var(--text-1);margin-bottom:8px;}
     .auth-desc{font-size:14px;color:var(--text-3);margin-bottom:24px;line-height:1.6;}
 
     /* 二维码区 */
-    .qr-box{
-      width:200px;height:200px;
-      margin:0 auto 16px;
-      background:#f8f8f8;
-      border-radius:var(--r-md);
-      display:flex;align-items:center;justify-content:center;
-      border:1px solid var(--border);
-      position:relative;
-    }
+    .qr-box{width:200px;height:200px;margin:0 auto 16px;background:#f8f8f8;border-radius:var(--r-md);
+      display:flex;align-items:center;justify-content:center;border:1px solid var(--border);position:relative;}
     .qr-placeholder{font-size:80px;opacity:0.3;}
-    .qr-expire{
-      position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
-      background:rgba(0,0,0,.6);color:#fff;font-size:12px;padding:4px 12px;border-radius:var(--r-full);
-    }
+    .qr-expire{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+      background:rgba(0,0,0,.6);color:#fff;font-size:12px;padding:4px 12px;border-radius:var(--r-full);}
 
     /* 刷新按钮 */
-    .refresh-btn{
-      display:inline-flex;align-items:center;gap:6px;
-      color:var(--primary);font-size:14px;cursor:pointer;
-      padding:8px 16px;border-radius:var(--r-full);
-      background:var(--primary-bg);margin-bottom:24px;
-      transition:all var(--tr);
-    }
+    .refresh-btn{display:inline-flex;align-items:center;gap:6px;color:var(--primary);font-size:14px;cursor:pointer;
+      padding:8px 16px;border-radius:var(--r-full);background:var(--primary-bg);margin-bottom:24px;
+      transition:all var(--tr);}
     .refresh-btn:hover{background:var(--primary-pale);}
 
-    /* 状态 */
-    .status-box{
-      background:var(--primary-bg);border-radius:var(--r-md);
-      padding:16px 20px;margin-bottom:20px;
-      display:flex;align-items:center;gap:12px;
-    }
-    .status-icon{font-size:24px;}
-    .status-text{font-size:14px;color:var(--text-2);text-align:left;}
-    .status-text strong{color:var(--primary);display:block;margin-bottom:2px;}
+    /* ===== 状态提示框 ===== */
+    .status-box{border-radius:var(--r-md);padding:16px 20px;display:flex;align-items:flex-start;gap:12px;text-align:left;}
+    .status-box .s-icon{font-size:24px;flex-shrink:0;margin-top:2px;}
+    .status-box .s-body{flex:1;}
+    .status-box .s-title{font-size:15px;font-weight:600;margin-bottom:4px;}
+    .status-box .s-desc{font-size:13px;color:var(--text-3);line-height:1.5;}
+    .status-box .s-action{margin-top:10px;}
+
+    /* 各色状态框 */
+    .status-box.s-blue{background:var(--primary-bg);}
+    .status-box.s-blue .s-title{color:var(--primary);}
+    .status-box.s-green{background:var(--success-bg);}
+    .status-box.s-green .s-title{color:var(--success);}
+    .status-box.s-red{background:var(--error-bg);}
+    .status-box.s-red .s-title{color:var(--error);}
+    .status-box.s-orange{background:var(--warning-bg);}
+    .status-box.s-orange .s-title{color:var(--warning);}
+    .status-box.s-grey{background:var(--grey-bg);}
+    .status-box.s-grey .s-title{color:var(--grey);}
+
+    /* 状态框内按钮 */
+    .s-btn{display:inline-flex;align-items:center;gap:4px;padding:8px 16px;border-radius:var(--r-full);
+      font-size:13px;font-weight:500;border:none;cursor:pointer;transition:all var(--tr);font-family:inherit;}
+    .s-btn:hover{filter:brightness(1.05);}
+    .s-btn:active{transform:scale(0.97);}
+    .s-btn-blue{background:var(--primary);color:#fff;}
+    .s-btn-red{background:var(--error);color:#fff;}
+    .s-btn-outline{background:#fff;color:var(--text-2);border:1px solid var(--border);}
+    .s-btn-grey{background:var(--grey);color:#fff;}
+
+    /* 结果大图标（通过/失败/终止） */
+    .result-icon{font-size:72px;margin-bottom:16px;line-height:1;}
+    .result-title{font-size:20px;font-weight:600;margin-bottom:8px;}
+    .result-desc{font-size:14px;color:var(--text-3);line-height:1.6;margin-bottom:20px;}
 
     /* Tab 内容面板 */
     .tab-panel{display:none;}
     .tab-panel.active{display:block;}
 
     /* 底部按钮 */
-    .bottom-bar{position:fixed;bottom:0;left:0;right:0;
-      background:#fff;padding:12px 20px 32px;
+    .bottom-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;padding:12px 20px 32px;
       display:flex;flex-direction:column;gap:10px;z-index:50;border-top:1px solid var(--border);}
-    .btn-row{display:flex;gap:12px;}
-    .btn-primary{height:48px;border:none;border-radius:var(--r-sm);
-      background:var(--primary);color:#fff;
-      font-size:16px;font-weight:500;cursor:pointer;font-family:inherit;
-      transition:all var(--tr);flex:1;}
-    .btn-primary:hover:not(:disabled){filter:brightness(1.05);}
-    .btn-primary:active:not(:disabled){transform:scale(0.98);}
-    .btn-primary:disabled{background:#C9CDD4;cursor:not-allowed;}
     .bottom-tech{font-size:12px;color:#C9CDD4;text-align:center;}
+
+    /* ===== 状态切换器（开发调试） ===== */
+    .state-switcher{background:#fff;border-radius:var(--r-lg);padding:16px;margin-bottom:16px;
+      box-shadow:var(--shadow-card);border:1px solid var(--border);}
+    .state-switcher-title{font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:12px;
+      display:flex;align-items:center;gap:6px;}
+    .state-switcher-title span{background:var(--error);color:#fff;font-size:10px;padding:2px 6px;
+      border-radius:var(--r-full);}
+    .state-group{margin-bottom:12px;}
+    .state-group:last-child{margin-bottom:0;}
+    .state-group-label{font-size:12px;font-weight:600;color:var(--text-3);margin-bottom:6px;
+      padding-left:2px;}
+    .state-btns{display:flex;flex-wrap:wrap;gap:6px;}
+    .state-btn{padding:6px 12px;border-radius:var(--r-full);font-size:12px;font-weight:500;
+      border:1px solid var(--border);background:#fff;color:var(--text-2);cursor:pointer;
+      transition:all var(--tr);font-family:inherit;}
+    .state-btn:hover{border-color:var(--primary);color:var(--primary);}
+    .state-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+    .state-btn.btn-red{border-color:var(--error);color:var(--error);}
+    .state-btn.btn-red:hover,.state-btn.btn-red.active{background:var(--error);color:#fff;}
+    .state-btn.btn-orange{border-color:var(--warning);color:var(--warning);}
+    .state-btn.btn-orange:hover,.state-btn.btn-orange.active{background:var(--warning);color:#fff;}
+    .state-btn.btn-green{border-color:var(--success);color:var(--success);}
+    .state-btn.btn-green:hover,.state-btn.btn-green.active{background:var(--success);color:#fff;}
+    .state-btn.btn-grey{border-color:var(--grey);color:var(--grey);}
+    .state-btn.btn-grey:hover,.state-btn.btn-grey.active{background:var(--grey);color:#fff;}
 
     /* Toast */
     .toast{position:fixed;top:72px;left:50%;transform:translateX(-50%) translateY(-20px);
@@ -164,39 +180,23 @@
   <div class="nav-step">4/4</div>
 </div>
 
-<!-- 步骤条（4步：填写资料→银盛审核→签约→微信/支付宝认证） -->
+<!-- 步骤条 -->
 <div class="step-bar">
   <div class="step-list">
     <div class="step-item done">
-      <div class="step-num"><span>1</span>
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
+      <div class="step-num"><span>1</span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="step-name">填写资料</div>
     </div>
     <div class="step-item done">
-      <div class="step-num"><span>2</span>
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
+      <div class="step-num"><span>2</span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="step-name">银盛审核</div>
     </div>
     <div class="step-item done">
-      <div class="step-num"><span>3</span>
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
+      <div class="step-num"><span>3</span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="step-name">签约确认</div>
     </div>
     <div class="step-item active">
-      <div class="step-num"><span>4</span>
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
+      <div class="step-num"><span>4</span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="step-name">微信/支付宝</div>
     </div>
   </div>
@@ -204,93 +204,263 @@
 
 <div class="page-content">
 
+  <!-- 状态切换器（原型演示用） -->
+  <div class="state-switcher">
+    <div class="state-switcher-title">⚙️ 状态切换器 <span>演示</span></div>
+    <div class="state-group">
+      <div class="state-group-label">🔵 微信认证状态</div>
+      <div class="state-btns" id="wechatStateBtns">
+        <button class="state-btn active" onclick="setWechatState('AUDITING')">审核中</button>
+        <button class="state-btn btn-orange" onclick="setWechatState('LEGAL_CONFIRM')">待法人确认</button>
+        <button class="state-btn btn-orange" onclick="setWechatState('CONTACT_CONFIRM')">待确认联系</button>
+        <button class="state-btn btn-green" onclick="setWechatState('PASS')">审核通过</button>
+        <button class="state-btn btn-red" onclick="setWechatState('REJECT')">审核失败</button>
+        <button class="state-btn btn-red" onclick="setWechatState('APPLY_FAIL')">提交失败</button>
+        <button class="state-btn btn-grey" onclick="setWechatState('CANCELED')">已撤回</button>
+        <button class="state-btn btn-grey" onclick="setWechatState('FREEZE')">已冻结</button>
+        <button class="state-btn btn-grey" onclick="setWechatState('LOGGED')">已销户</button>
+        <button class="state-btn btn-grey" onclick="setWechatState('UNDEFINED')">未定义</button>
+      </div>
+    </div>
+    <div class="state-group">
+      <div class="state-group-label">🔵 支付宝认证状态</div>
+      <div class="state-btns" id="alipayStateBtns">
+        <button class="state-btn active" onclick="setAlipayState('WAITTING')">审核中</button>
+        <button class="state-btn btn-orange" onclick="setAlipayState('EDITTING')">编辑中</button>
+        <button class="state-btn btn-orange" onclick="setAlipayState('CONFIRM_CONTACT')">待确认联系</button>
+        <button class="state-btn btn-orange" onclick="setAlipayState('CONFIRM_LEGALPERSON')">待账户验证</button>
+        <button class="state-btn btn-green" onclick="setAlipayState('PASSED')">审核通过</button>
+        <button class="state-btn btn-red" onclick="setAlipayState('REJECTED')">审核驳回</button>
+        <button class="state-btn btn-grey" onclick="setAlipayState('FREEZED')">已冻结</button>
+        <button class="state-btn btn-grey" onclick="setAlipayState('CANCELED')">已作废</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Tab 切换 -->
   <div class="tab-bar">
     <button class="tab-item active" id="tabWechat" onclick="switchTab('wechat')">
       <img src="assets/微信支付.svg" width="20" height="20" alt="微信">微信认证
+      <span class="tab-dot dot-waiting" id="dotWechat"></span>
     </button>
     <button class="tab-item" id="tabAlipay" onclick="switchTab('alipay')">
       <img src="assets/支付宝支付.svg" width="20" height="20" alt="支付宝">支付宝认证
+      <span class="tab-dot dot-waiting" id="dotAlipay"></span>
     </button>
   </div>
 
   <!-- 微信认证面板 -->
   <div class="tab-panel active" id="panelWechat">
-    <div class="auth-card">
-      <div class="auth-icon" style="display:flex;align-items:center;justify-content:center;">
-        <img src="assets/微信支付.svg" alt="微信支付" width="64" height="64">
-      </div>
-      <div class="auth-title">微信扫码认证</div>
-      <div class="auth-desc">请使用微信扫描下方二维码<br/>完成商户主体认证</div>
-
-      <div class="qr-box">
-        <div class="qr-placeholder pulse">📱</div>
-        <div class="qr-expire">有效期：5分钟</div>
-      </div>
-
-      <div class="refresh-btn" onclick="refreshQR('wechat')">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7a6 6 0 1 0 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M1 1v4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        刷新二维码
-      </div>
-
-      <div class="status-box">
-        <div class="status-icon pulse">⏳</div>
-        <div class="status-text">
-          <strong>等待微信认证中...</strong>
-          请使用微信扫码完成认证
-        </div>
-      </div>
+    <div class="auth-card" id="wechatCard">
+      <!-- JS 动态渲染 -->
     </div>
   </div>
 
   <!-- 支付宝认证面板 -->
   <div class="tab-panel" id="panelAlipay">
-    <div class="auth-card">
-      <div class="auth-icon" style="display:flex;align-items:center;justify-content:center;">
-        <img src="assets/支付宝支付.svg" alt="支付宝" width="64" height="64">
-      </div>
-      <div class="auth-title">支付宝扫码认证</div>
-      <div class="auth-desc">请使用支付宝扫描下方二维码<br/>完成商家认证</div>
-
-      <div class="qr-box">
-        <div class="qr-placeholder pulse">💙</div>
-        <div class="qr-expire">有效期：5分钟</div>
-      </div>
-
-      <div class="refresh-btn" onclick="refreshQR('alipay')">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7a6 6 0 1 0 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M1 1v4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        刷新二维码
-      </div>
-
-      <div class="status-box">
-        <div class="status-icon pulse">⏳</div>
-        <div class="status-text">
-          <strong>等待支付宝认证中...</strong>
-          请使用支付宝扫码完成认证
-        </div>
-      </div>
+    <div class="auth-card" id="alipayCard">
+      <!-- JS 动态渲染 -->
     </div>
   </div>
 
 </div>
 
-<!-- 底部按钮 -->
-<div class="bottom-bar">
-  <div class="btn-row">
-    <button class="btn-primary" id="btnComplete" onclick="markComplete()">已完成认证</button>
-  </div>
+<!-- 底部 -->
+<div class="bottom-bar" id="bottomBar">
   <div class="bottom-tech">由银盛提供技术支持</div>
 </div>
 
 <script>
-  function showToast(msg, d = 2000) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    clearTimeout(t._t);
-    t._t = setTimeout(() => t.classList.remove('show'), d);
+  // ===== 状态数据 =====
+  let wechatState = 'AUDITING';
+  let alipayState = 'WAITTING';
+
+  // 微信状态配置
+  const WECHAT_STATES = {
+    AUDITING:        { type:'waiting', icon:'⏳', title:'等待微信认证中...', desc:'请使用微信扫描二维码完成商户主体认证', dot:'dot-waiting' },
+    LEGAL_CONFIRM:   { type:'action', icon:'👤', title:'待法人确认', desc:'法人需在微信端完成身份确认，请通知法人打开微信进行操作', action:'通知法人确认', dot:'dot-warning' },
+    CONTACT_CONFIRM: { type:'action', icon:'📞', title:'待确认联系信息', desc:'请在微信端确认您的联系信息是否正确', action:'去确认联系信息', dot:'dot-warning' },
+    PASS:            { type:'success', icon:'✅', title:'微信认证已通过', desc:'微信商户认证已通过，请完成支付宝认证', dot:'dot-success' },
+    REJECT:          { type:'fail', icon:'❌', title:'微信认证失败', desc:'微信商户认证未通过，请检查信息后重新提交', reason:'主体信息与微信支付要求不符', action:'重新提交', dot:'dot-error' },
+    APPLY_FAIL:      { type:'fail', icon:'⚠️', title:'提交审核失败', desc:'微信认证提交失败，请重新尝试提交', reason:'网络异常，提交超时', action:'重新提交', dot:'dot-error' },
+    CANCELED:        { type:'terminal', icon:'🚫', title:'认证已撤回', desc:'微信认证申请已被撤回，如需继续使用请重新申请', dot:'dot-grey' },
+    FREEZE:          { type:'terminal', icon:'🔒', title:'账户已冻结', desc:'微信商户账户已被冻结，请联系客服了解详情', dot:'dot-grey' },
+    LOGGED:          { type:'terminal', icon:'🏴', title:'账户已销户', desc:'微信商户账户已注销，如需重新开通请联系客服', dot:'dot-grey' },
+    UNDEFINED:       { type:'terminal', icon:'❓', title:'状态异常', desc:'微信认证状态异常，请联系客服处理', dot:'dot-grey' },
+  };
+
+  // 支付宝状态配置
+  const ALIPAY_STATES = {
+    WAITTING:            { type:'waiting', icon:'⏳', title:'等待支付宝认证中...', desc:'请使用支付宝扫描二维码完成商家认证', dot:'dot-waiting' },
+    EDITTING:            { type:'action', icon:'✏️', title:'信息编辑中', desc:'支付宝认证信息可修改，请在支付宝端完成编辑', action:'去编辑信息', dot:'dot-warning' },
+    CONFIRM_CONTACT:     { type:'action', icon:'📞', title:'待确认联系信息', desc:'请在支付宝端确认您的联系信息是否正确', action:'去确认联系信息', dot:'dot-warning' },
+    CONFIRM_LEGALPERSON: { type:'action', icon:'👤', title:'待账户验证', desc:'法人需在支付宝端完成账户验证，请通知法人操作', action:'通知法人验证', dot:'dot-warning' },
+    PASSED:              { type:'success', icon:'✅', title:'支付宝认证已通过', desc:'支付宝商家认证已通过，请完成微信认证', dot:'dot-success' },
+    REJECTED:            { type:'fail', icon:'❌', title:'支付宝认证驳回', desc:'支付宝商家认证被驳回，请检查信息后重新提交', reason:'营业执照信息不匹配', action:'重新提交', dot:'dot-error' },
+    FREEZED:             { type:'terminal', icon:'🔒', title:'账户已冻结', desc:'支付宝商户账户已被冻结，请联系客服了解详情', dot:'dot-grey' },
+    CANCELED:            { type:'terminal', icon:'🚫', title:'认证已作废', desc:'支付宝认证申请已作废，如需继续使用请重新申请', dot:'dot-grey' },
+  };
+
+  // ===== 渲染逻辑 =====
+  function renderWaiting(config, platform) {
+    const svgIcon = platform === 'wechat' ? '微信支付.svg' : '支付宝支付.svg';
+    const name = platform === 'wechat' ? '微信' : '支付宝';
+    const emoji = platform === 'wechat' ? '📱' : '💙';
+    return `
+      <div class="auth-icon" style="display:flex;align-items:center;justify-content:center;">
+        <img src="assets/${svgIcon}" alt="${name}" width="64" height="64">
+      </div>
+      <div class="auth-title">${name}扫码认证</div>
+      <div class="auth-desc">请使用${name}扫描下方二维码<br/>完成商户主体认证</div>
+      <div class="qr-box">
+        <div class="qr-placeholder pulse">${emoji}</div>
+        <div class="qr-expire">有效期：5分钟</div>
+      </div>
+      <div class="refresh-btn" onclick="refreshQR('${platform}')">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7a6 6 0 1 0 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M1 1v4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        刷新二维码
+      </div>
+      <div class="status-box s-blue">
+        <div class="s-icon pulse">${config.icon}</div>
+        <div class="s-body">
+          <div class="s-title">${config.title}</div>
+          <div class="s-desc">${config.desc}</div>
+        </div>
+      </div>`;
   }
 
+  function renderAction(config) {
+    return `
+      <div class="result-icon">${config.icon}</div>
+      <div class="result-title" style="color:var(--warning);">${config.title}</div>
+      <div class="result-desc">${config.desc}</div>
+      <div class="status-box s-orange">
+        <div class="s-icon">${config.icon}</div>
+        <div class="s-body">
+          <div class="s-title">${config.title}</div>
+          <div class="s-desc">${config.desc}</div>
+          <div class="s-action">
+            <button class="s-btn s-btn-blue" onclick="showToast('正在跳转...')">${config.action}</button>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function renderSuccess(config, platform) {
+    const other = platform === 'wechat' ? '支付宝' : '微信';
+    const otherPassed = platform === 'wechat'
+      ? alipayState === 'PASSED'
+      : wechatState === 'PASS';
+    const allPassed = otherPassed;
+    return `
+      <div class="result-icon">🎉</div>
+      <div class="result-title" style="color:var(--success);">${config.title}</div>
+      <div class="result-desc">${allPassed
+        ? '恭喜！微信和支付宝认证均已通过，即将进入成功页面'
+        : config.desc}</div>
+      <div class="status-box s-green">
+        <div class="s-icon">✅</div>
+        <div class="s-body">
+          <div class="s-title">${config.title}</div>
+          <div class="s-desc">${allPassed
+            ? '所有认证已完成，系统将自动跳转'
+            : `${other}认证还未完成，请切换到${other}Tab继续认证`}</div>
+        </div>
+      </div>`;
+  }
+
+  function renderFail(config) {
+    return `
+      <div class="result-icon">${config.icon}</div>
+      <div class="result-title" style="color:var(--error);">${config.title}</div>
+      <div class="result-desc">${config.desc}</div>
+      ${config.reason ? `<div style="background:var(--error-bg);border-radius:var(--r-md);padding:12px 16px;margin-bottom:20px;text-align:left;">
+        <div style="font-size:12px;color:var(--error);font-weight:500;margin-bottom:4px;">失败原因</div>
+        <div style="font-size:13px;color:var(--text-2);">${config.reason}</div>
+      </div>` : ''}
+      <div class="status-box s-red">
+        <div class="s-icon">${config.icon}</div>
+        <div class="s-body">
+          <div class="s-title">${config.title}</div>
+          <div class="s-desc">${config.desc}</div>
+          <div class="s-action" style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="s-btn s-btn-red" onclick="showToast('正在跳转重新提交...')">${config.action || '重新提交'}</button>
+            <button class="s-btn s-btn-outline" onclick="showToast('客服电话：400-XXX-XXXX')">联系客服</button>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function renderTerminal(config) {
+    return `
+      <div class="result-icon">${config.icon}</div>
+      <div class="result-title" style="color:var(--grey);">${config.title}</div>
+      <div class="result-desc">${config.desc}</div>
+      <div class="status-box s-grey">
+        <div class="s-icon">${config.icon}</div>
+        <div class="s-body">
+          <div class="s-title">${config.title}</div>
+          <div class="s-desc">${config.desc}</div>
+          <div class="s-action">
+            <button class="s-btn s-btn-grey" onclick="showToast('客服电话：400-XXX-XXXX')">联系客服</button>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function renderCard(platform, state) {
+    const config = platform === 'wechat' ? WECHAT_STATES[state] : ALIPAY_STATES[state];
+    if (!config) return '<div>未知状态</div>';
+    switch (config.type) {
+      case 'waiting':  return renderWaiting(config, platform);
+      case 'action':   return renderAction(config);
+      case 'success':  return renderSuccess(config, platform);
+      case 'fail':     return renderFail(config);
+      case 'terminal': return renderTerminal(config);
+      default:         return '<div>未知状态</div>';
+    }
+  }
+
+  // ===== 更新界面 =====
+  function updateUI() {
+    // 渲染卡片
+    document.getElementById('wechatCard').innerHTML = renderCard('wechat', wechatState);
+    document.getElementById('alipayCard').innerHTML = renderCard('alipay', alipayState);
+
+    // 更新 Tab 小点
+    const wDot = WECHAT_STATES[wechatState]?.dot || 'dot-waiting';
+    const aDot = ALIPAY_STATES[alipayState]?.dot || 'dot-waiting';
+    document.getElementById('dotWechat').className = 'tab-dot ' + wDot;
+    document.getElementById('dotAlipay').className = 'tab-dot ' + aDot;
+
+    // 检查是否都通过 → 自动跳转
+    if (wechatState === 'PASS' && alipayState === 'PASSED') {
+      setTimeout(() => {
+        showToast('🎉 所有认证已通过，正在跳转成功页面...');
+        setTimeout(() => {
+          window.location.href = 'yinsheng-onboarding-success.html';
+        }, 2000);
+      }, 500);
+    }
+  }
+
+  // ===== 状态切换 =====
+  function setWechatState(state) {
+    wechatState = state;
+    // 更新按钮状态
+    document.querySelectorAll('#wechatStateBtns .state-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    updateUI();
+  }
+
+  function setAlipayState(state) {
+    alipayState = state;
+    document.querySelectorAll('#alipayStateBtns .state-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    updateUI();
+  }
+
+  // ===== Tab 切换 =====
   function switchTab(tab) {
     document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(el => el.classList.remove('active'));
@@ -300,16 +470,21 @@
 
   function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
+  // ===== 工具 =====
+  function showToast(msg, d = 2500) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._t);
+    t._t = setTimeout(() => t.classList.remove('show'), d);
+  }
+
   function refreshQR(type) {
     showToast('🔄 刷新' + (type === 'wechat' ? '微信' : '支付宝') + '二维码...');
   }
 
-  function markComplete() {
-    showToast('🎉 认证成功！正在跳转...');
-    setTimeout(() => {
-      window.location.href = 'yinsheng-onboarding-success.html';
-    }, 1500);
-  }
+  // 初始化
+  updateUI();
 </script>
 </body>
 </html>
