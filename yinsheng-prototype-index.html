@@ -61,6 +61,19 @@
       max-width:60px;}
     .flow-arrow{font-size:16px;color:var(--text-dis);flex-shrink:0;padding:0 2px;margin-top:-16px;}
 
+    /* 异常分支标识 */
+    .flow-step-dot{position:relative;}
+    .flow-step-exception{position:absolute;top:-4px;right:-6px;width:16px;height:16px;
+      background:var(--error);border-radius:50%;display:flex;align-items:center;justify-content:center;
+      font-size:9px;color:#fff;font-weight:700;border:2px solid #fff;box-shadow:0 1px 4px rgba(245,63,63,0.3);}
+    .flow-step-label-except{color:var(--error)!important;font-weight:600!important;}
+    .exception-legend{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:8px 12px;
+      background:#FFECE8;border-radius:var(--r-sm);border:1px solid rgba(245,63,63,0.15);}
+    .exception-dot{width:10px;height:10px;background:var(--error);border-radius:50%;
+      position:relative;display:inline-block;}
+    .exception-dot::after{content:'';position:absolute;top:-1px;right:-1px;
+      width:7px;height:7px;background:#F53F3F;border-radius:50%;border:1.5px solid #fff;}
+
     /* 分区标题 */
     .section-title{font-size:16px;font-weight:700;color:var(--text-1);
       padding:24px 20px 12px;display:flex;align-items:center;gap:8px;}
@@ -153,8 +166,10 @@
     </div>
     <div class="flow-arrow">›</div>
     <div class="flow-step" onclick="location.href='yinsheng-signing-processing.html'">
-      <div class="flow-step-dot" style="background:#EEF3FF;">🔍</div>
-      <div class="flow-step-label">银盛审核</div>
+      <div class="flow-step-dot" style="background:#EEF3FF;position:relative;">🔍
+        <span class="flow-step-exception" title="含异常分支：审核失败/审核不通过">!</span>
+      </div>
+      <div class="flow-step-label flow-step-label-except">银盛审核</div>
     </div>
     <div class="flow-arrow">›</div>
     <div class="flow-step" onclick="location.href='yinsheng-signing-confirm.html'">
@@ -195,8 +210,10 @@
     </div>
     <div class="flow-arrow">›</div>
     <div class="flow-step" onclick="location.href='yinsheng-signing-processing.html'">
-      <div class="flow-step-dot" style="background:#EEF3FF;">🔍</div>
-      <div class="flow-step-label">银盛审核</div>
+      <div class="flow-step-dot" style="background:#EEF3FF;position:relative;">🔍
+        <span class="flow-step-exception" title="含异常分支：商户审核失败/商户审核不通过">!</span>
+      </div>
+      <div class="flow-step-label flow-step-label-except">银盛审核</div>
     </div>
     <div class="flow-arrow">›</div>
     <div class="flow-step" onclick="location.href='yinsheng-signing-confirm-merchant.html'">
@@ -213,6 +230,12 @@
       <div class="flow-step-dot" style="background:#E8FFEA;">🎉</div>
       <div class="flow-step-label">申请成功</div>
     </div>
+  </div>
+
+  <!-- 异常分支图例 -->
+  <div class="exception-legend">
+    <span class="exception-dot"></span>
+    <span style="font-size:11px;color:#F53F3F;font-weight:500;">红色标记 = 该节点存在异常分支流程（审核失败/审核不通过）</span>
   </div>
 </div>
 
