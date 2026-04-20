@@ -663,7 +663,7 @@
     返回
   </div>
   <div class="nav-title">银盛审核</div>
-  <div class="nav-step" id="navStep">2/5</div>
+  <div class="nav-step" id="navStep">2/4</div>
 </nav>
 
 <!-- 结果弹窗 -->
@@ -678,7 +678,7 @@
   </div>
 </div>
 
-<!-- 步骤条 -->
+<!-- 步骤条（4步） -->
 <div class="step-bar">
   <div class="step-list">
     <div class="step-item done">
@@ -699,11 +699,7 @@
     </div>
     <div class="step-item">
       <div class="step-num">4</div>
-      <div class="step-name">微信/支付宝认证</div>
-    </div>
-    <div class="step-item">
-      <div class="step-num">5</div>
-      <div class="step-name">申请成功</div>
+      <div class="step-name">微信/支付宝</div>
     </div>
   </div>
 </div>
@@ -1077,7 +1073,7 @@
   // 导航栏步骤数
   const navStep = document.getElementById('navStep');
   const at = sessionStorage.getItem('accountType') || 'personal';
-  navStep.textContent = at === 'merchant' ? '2/5' : '2/6';
+  navStep.textContent = at === 'merchant' ? '2/4' : '2/6';
 
   startTimer();
   // 自动轮询已禁用，仅保留手动刷新
