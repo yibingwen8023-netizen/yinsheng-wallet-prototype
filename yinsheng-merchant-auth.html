@@ -56,7 +56,7 @@
     .tab-item:not(.active):hover{background:var(--primary-bg);}
     /* Tab 状态小点 */
     .tab-dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0;}
-    .tab-dot.dot-waiting{background:var(--primary);}
+    .tab-dot.dot-blue{background:var(--primary);}
     .tab-dot.dot-success{background:var(--success);}
     .tab-dot.dot-error{background:var(--error);}
     .tab-dot.dot-warning{background:var(--warning);}
@@ -65,6 +65,16 @@
     /* 认证卡片 */
     .auth-card{background:#fff;border-radius:var(--r-lg);padding:32px 20px;text-align:center;
       box-shadow:var(--shadow-card);transition:all var(--tr);}
+
+    /* 卡片头部 */
+    .card-header{margin-bottom:24px;}
+    .card-logo{width:56px;height:56px;margin:0 auto 12px;}
+    .card-title{font-size:20px;font-weight:600;color:var(--text-1);margin-bottom:8px;line-height:1.4;}
+    .card-subtitle{font-size:14px;color:var(--text-3);line-height:1.6;}
+
+    /* 双平台Logo */
+    .dual-logo{display:flex;justify-content:center;gap:16px;margin-bottom:12px;}
+    .dual-logo img{width:48px;height:48px;}
 
     /* 二维码区 */
     .qr-box{width:200px;height:200px;margin:0 auto 16px;background:#f8f8f8;border-radius:var(--r-md);
@@ -80,8 +90,7 @@
     .refresh-btn:hover{background:var(--primary-pale);border-color:var(--primary);}
     .refresh-btn:active{transform:scale(0.97);}
 
-    /* ===== 结果状态区域 ===== */
-    .result-area{padding-top:8px;}
+    /* 结果状态区域 */
     .result-icon{font-size:64px;margin-bottom:16px;line-height:1;}
     .result-title{font-size:20px;font-weight:600;margin-bottom:8px;line-height:1.4;}
     .result-desc{font-size:14px;color:var(--text-3);line-height:1.6;margin-bottom:20px;}
@@ -96,7 +105,7 @@
     .reason-label{font-size:12px;color:var(--error);font-weight:500;margin-bottom:4px;}
     .reason-text{font-size:13px;color:var(--text-2);line-height:1.5;}
 
-    /* 提示信息框（需操作/终止） */
+    /* 提示信息框 */
     .info-box{border-radius:var(--r-md);padding:16px 20px;text-align:left;display:flex;align-items:flex-start;gap:12px;}
     .info-box .ib-icon{font-size:24px;flex-shrink:0;margin-top:1px;}
     .info-box .ib-body{flex:1;}
@@ -106,17 +115,21 @@
     .info-box.ib-orange .ib-title{color:var(--warning);}
     .info-box.ib-grey{background:var(--grey-bg);}
     .info-box.ib-grey .ib-title{color:var(--grey);}
+    .info-box.ib-blue{background:var(--primary-bg);}
+    .info-box.ib-blue .ib-title{color:var(--primary);}
 
     /* 双认证状态条 */
     .both-status{display:flex;gap:12px;margin-top:16px;}
     .both-item{flex:1;background:var(--bg);border-radius:var(--r-md);padding:12px;text-align:center;}
     .both-item.b-pass{background:var(--success-bg);}
     .both-item.b-wait{background:var(--primary-bg);}
+    .both-item.b-fail{background:var(--error-bg);}
     .both-item .bi-icon{font-size:20px;margin-bottom:4px;}
     .both-item .bi-label{font-size:12px;color:var(--text-3);}
     .both-item .bi-status{font-size:13px;font-weight:600;margin-top:2px;}
     .both-item.b-pass .bi-status{color:var(--success);}
     .both-item.b-wait .bi-status{color:var(--primary);}
+    .both-item.b-fail .bi-status{color:var(--error);}
 
     /* 操作按钮 */
     .action-btns{display:flex;flex-direction:column;gap:10px;margin-top:20px;}
@@ -149,6 +162,8 @@
       transition:all var(--tr);font-family:inherit;}
     .ss-btn:hover{border-color:var(--primary);color:var(--primary);}
     .ss-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+    .ss-btn.sb-blue{border-color:rgba(22,93,255,0.3);color:var(--primary);}
+    .ss-btn.sb-blue:hover,.ss-btn.sb-blue.active{background:var(--primary);color:#fff;}
     .ss-btn.sb-red{border-color:rgba(245,63,63,0.3);color:var(--error);}
     .ss-btn.sb-red:hover,.ss-btn.sb-red.active{background:var(--error);color:#fff;}
     .ss-btn.sb-orange{border-color:rgba(255,125,0,0.3);color:var(--warning);}
@@ -211,104 +226,175 @@
   <div class="state-switcher">
     <div class="ss-title">⚙️ 状态切换器 <span>演示</span></div>
     <div class="ss-group">
-      <div class="ss-label">微信认证状态（10种）</div>
+      <div class="ss-label">微信认证状态（12种）</div>
       <div class="ss-btns" id="wxBtns">
-        <button class="ss-btn active" onclick="setWx('AUDITING')">审核中</button>
+        <button class="ss-btn sb-blue active" onclick="setWx('NOT_FILING')">未报备</button>
+        <button class="ss-btn sb-orange" onclick="setWx('FILING')">报备审核中</button>
+        <button class="ss-btn sb-red" onclick="setWx('FILING_FAIL')">报备失败</button>
+        <button class="ss-btn sb-blue" onclick="setWx('AUDITING')">扫码认证</button>
         <button class="ss-btn sb-orange" onclick="setWx('LEGAL_CONFIRM')">待法人确认</button>
         <button class="ss-btn sb-orange" onclick="setWx('CONTACT_CONFIRM')">待确认联系</button>
-        <button class="ss-btn sb-green" onclick="setWx('PASS')">审核通过</button>
+        <button class="ss-btn sb-green" onclick="setWx('PASS')">认证通过</button>
         <button class="ss-btn sb-red" onclick="setWx('REJECT')">审核失败</button>
         <button class="ss-btn sb-red" onclick="setWx('APPLY_FAIL')">提交失败</button>
         <button class="ss-btn sb-grey" onclick="setWx('CANCELED')">已撤回</button>
         <button class="ss-btn sb-grey" onclick="setWx('FREEZE')">已冻结</button>
         <button class="ss-btn sb-grey" onclick="setWx('LOGGED')">已销户</button>
-        <button class="ss-btn sb-grey" onclick="setWx('UNDEFINED')">未定义</button>
       </div>
     </div>
     <div class="ss-group">
-      <div class="ss-label">支付宝认证状态（8种）</div>
+      <div class="ss-label">支付宝认证状态（10种）</div>
       <div class="ss-btns" id="aliBtns">
-        <button class="ss-btn active" onclick="setAli('WAITTING')">审核中</button>
+        <button class="ss-btn sb-blue active" onclick="setAli('NOT_FILING')">未报备</button>
+        <button class="ss-btn sb-orange" onclick="setAli('FILING')">报备审核中</button>
+        <button class="ss-btn sb-red" onclick="setAli('FILING_FAIL')">报备失败</button>
+        <button class="ss-btn sb-blue" onclick="setAli('WAITTING')">扫码认证</button>
         <button class="ss-btn sb-orange" onclick="setAli('EDITTING')">编辑中</button>
         <button class="ss-btn sb-orange" onclick="setAli('CONFIRM_CONTACT')">待确认联系</button>
         <button class="ss-btn sb-orange" onclick="setAli('CONFIRM_LEGALPERSON')">待账户验证</button>
-        <button class="ss-btn sb-green" onclick="setAli('PASSED')">审核通过</button>
+        <button class="ss-btn sb-green" onclick="setAli('PASSED')">认证通过</button>
         <button class="ss-btn sb-red" onclick="setAli('REJECTED')">审核驳回</button>
         <button class="ss-btn sb-grey" onclick="setAli('FREEZED')">已冻结</button>
-        <button class="ss-btn sb-grey" onclick="setAli('CANCELED')">已作废</button>
       </div>
     </div>
   </div>
 
-  <!-- Tab 切换 -->
-  <div class="tab-bar">
-    <button class="tab-item active" id="tabWechat" onclick="switchTab('wechat')">
-      <img src="assets/微信支付.svg" width="20" height="20" alt="微信">微信认证
-      <span class="tab-dot dot-waiting" id="dotWx"></span>
-    </button>
-    <button class="tab-item" id="tabAlipay" onclick="switchTab('alipay')">
-      <img src="assets/支付宝支付.svg" width="20" height="20" alt="支付宝">支付宝认证
-      <span class="tab-dot dot-waiting" id="dotAli"></span>
-    </button>
-  </div>
+  <!-- 统一报备区（两个平台都未报备时显示） -->
+  <div class="auth-card" id="filingCard" style="display:none;"></div>
 
-  <!-- 微信面板 -->
-  <div class="tab-panel active" id="panelWechat">
-    <div class="auth-card" id="wxCard"></div>
-  </div>
+  <!-- Tab 切换（至少一个平台已报备后显示） -->
+  <div id="tabSection" style="display:none;">
+    <div class="tab-bar">
+      <button class="tab-item active" id="tabWechat" onclick="switchTab('wechat')">
+        <img src="assets/微信支付.svg" width="20" height="20" alt="微信">微信认证
+        <span class="tab-dot dot-grey" id="dotWx"></span>
+      </button>
+      <button class="tab-item" id="tabAlipay" onclick="switchTab('alipay')">
+        <img src="assets/支付宝支付.svg" width="20" height="20" alt="支付宝">支付宝认证
+        <span class="tab-dot dot-grey" id="dotAli"></span>
+      </button>
+    </div>
 
-  <!-- 支付宝面板 -->
-  <div class="tab-panel" id="panelAlipay">
-    <div class="auth-card" id="aliCard"></div>
+    <!-- 微信面板 -->
+    <div class="tab-panel active" id="panelWechat">
+      <div class="auth-card" id="wxCard"></div>
+    </div>
+
+    <!-- 支付宝面板 -->
+    <div class="tab-panel" id="panelAlipay">
+      <div class="auth-card" id="aliCard"></div>
+    </div>
   </div>
 
 </div>
 
 <script>
   // ===== 状态 =====
-  let wxState = 'AUDITING';
-  let aliState = 'WAITTING';
+  let wxState = 'NOT_FILING';
+  let aliState = 'NOT_FILING';
+  let currentTab = 'wechat';
 
   // ===== 微信状态配置 =====
   const WX = {
-    AUDITING:        { ui:'scanning', dot:'dot-waiting' },
-    LEGAL_CONFIRM:   { ui:'action',  icon:'👤', title:'待法人确认', desc:'法人需在微信端完成身份确认操作，请通知法人打开微信进行确认。', dot:'dot-warning' },
-    CONTACT_CONFIRM: { ui:'action',  icon:'📞', title:'待确认联系信息', desc:'请在微信端确认您的联系信息是否正确，完成确认后返回本页面查询结果。', dot:'dot-warning' },
-    PASS:            { ui:'pass',    dot:'dot-success' },
-    REJECT:          { ui:'fail',    icon:'❌', title:'微信认证失败', reason:'主体信息与微信支付要求不符', dot:'dot-error' },
-    APPLY_FAIL:      { ui:'fail',    icon:'⚠️', title:'提交审核失败', reason:'网络异常，提交超时，请重新扫码', dot:'dot-error' },
-    CANCELED:        { ui:'terminal',icon:'🚫', title:'认证已撤回', desc:'微信认证申请已被撤回，如需继续使用请重新发起认证。', dot:'dot-grey' },
-    FREEZE:          { ui:'terminal',icon:'🔒', title:'账户已冻结', desc:'微信商户账户已被冻结，暂无法继续认证。', dot:'dot-grey' },
-    LOGGED:          { ui:'terminal',icon:'🏴', title:'账户已销户', desc:'微信商户账户已注销，无法继续认证。', dot:'dot-grey' },
-    UNDEFINED:       { ui:'terminal',icon:'❓', title:'状态异常', desc:'微信认证状态异常，请稍后再试。', dot:'dot-grey' },
+    NOT_FILING:     { ui:'not_filing', dot:'dot-grey' },
+    FILING:         { ui:'filing',     dot:'dot-warning' },
+    FILING_FAIL:    { ui:'filing_fail', icon:'❌', title:'微信报备失败', reason:'商户信息不完整，请检查后重新提交', dot:'dot-error' },
+    AUDITING:       { ui:'scanning',   dot:'dot-blue' },
+    LEGAL_CONFIRM:  { ui:'action',     icon:'👤', title:'待法人确认', desc:'法人需在微信端完成身份确认', dot:'dot-warning' },
+    CONTACT_CONFIRM:{ ui:'action',     icon:'📞', title:'待确认联系信息', desc:'请在微信端确认联系信息', dot:'dot-warning' },
+    PASS:           { ui:'pass',       dot:'dot-success' },
+    REJECT:         { ui:'fail',       icon:'❌', title:'微信认证失败', reason:'主体信息与微信支付要求不符', dot:'dot-error' },
+    APPLY_FAIL:     { ui:'fail',       icon:'⚠️', title:'提交审核失败', reason:'网络异常，提交超时', dot:'dot-error' },
+    CANCELED:       { ui:'terminal',   icon:'🚫', title:'认证已撤回', desc:'如需继续使用请重新发起认证', dot:'dot-grey' },
+    FREEZE:         { ui:'terminal',   icon:'🔒', title:'账户已冻结', desc:'暂无法继续认证', dot:'dot-grey' },
+    LOGGED:         { ui:'terminal',   icon:'🏴', title:'账户已销户', desc:'无法继续认证', dot:'dot-grey' },
   };
 
   // ===== 支付宝状态配置 =====
   const ALI = {
-    WAITTING:            { ui:'scanning', dot:'dot-waiting' },
-    EDITTING:            { ui:'action',  icon:'✏️', title:'信息编辑中', desc:'支付宝认证信息可修改，请在支付宝端完成编辑后返回本页面查询结果。', dot:'dot-warning' },
-    CONFIRM_CONTACT:     { ui:'action',  icon:'📞', title:'待确认联系信息', desc:'请在支付宝端确认您的联系信息是否正确，完成确认后返回本页面查询结果。', dot:'dot-warning' },
-    CONFIRM_LEGALPERSON: { ui:'action',  icon:'👤', title:'待账户验证', desc:'法人需在支付宝端完成账户验证操作，请通知法人完成验证。', dot:'dot-warning' },
-    PASSED:              { ui:'pass',    dot:'dot-success' },
-    REJECTED:            { ui:'fail',    icon:'❌', title:'支付宝认证驳回', reason:'营业执照信息与支付宝要求不匹配', dot:'dot-error' },
-    FREEZED:             { ui:'terminal',icon:'🔒', title:'账户已冻结', desc:'支付宝商户账户已被冻结，暂无法继续认证。', dot:'dot-grey' },
-    CANCELED:            { ui:'terminal',icon:'🚫', title:'认证已作废', desc:'支付宝认证申请已作废，如需继续使用请重新发起认证。', dot:'dot-grey' },
+    NOT_FILING:          { ui:'not_filing', dot:'dot-grey' },
+    FILING:              { ui:'filing',     dot:'dot-warning' },
+    FILING_FAIL:         { ui:'filing_fail', icon:'❌', title:'支付宝报备失败', reason:'营业执照信息与支付宝要求不匹配', dot:'dot-error' },
+    WAITTING:            { ui:'scanning',   dot:'dot-blue' },
+    EDITTING:            { ui:'action',     icon:'✏️', title:'信息编辑中', desc:'请在支付宝端完成信息编辑', dot:'dot-warning' },
+    CONFIRM_CONTACT:     { ui:'action',     icon:'📞', title:'待确认联系信息', desc:'请在支付宝端确认联系信息', dot:'dot-warning' },
+    CONFIRM_LEGALPERSON: { ui:'action',     icon:'👤', title:'待账户验证', desc:'法人需在支付宝端完成账户验证', dot:'dot-warning' },
+    PASSED:              { ui:'pass',       dot:'dot-success' },
+    REJECTED:            { ui:'fail',       icon:'❌', title:'支付宝认证驳回', reason:'营业执照信息与支付宝要求不匹配', dot:'dot-error' },
+    FREEZED:             { ui:'terminal',   icon:'🔒', title:'账户已冻结', desc:'暂无法继续认证', dot:'dot-grey' },
   };
 
-  // ===== 渲染 =====
-  function htmlScanning(platform) {
-    const isWx = platform === 'wechat';
-    const svg = isWx ? '微信支付.svg' : '支付宝支付.svg';
-    const name = isWx ? '微信' : '支付宝';
-    const emoji = isWx ? '📱' : '💙';
+  // ===== 公共：卡片头部 =====
+  function cardHeader(platform, title, subtitle) {
+    const svg = platform === 'wechat' ? '微信支付.svg' : '支付宝支付.svg';
+    const name = platform === 'wechat' ? '微信' : '支付宝';
     return `
-      <div style="display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
-        <img src="assets/${svg}" alt="${name}" width="56" height="56">
+      <div class="card-header">
+        <div class="card-logo"><img src="assets/${svg}" alt="${name}" width="56" height="56"></div>
+        <div class="card-title">${title}</div>
+        <div class="card-subtitle">${subtitle}</div>
+      </div>`;
+  }
+
+  // ===== UI：统一报备申请（两个都未报备时） =====
+  function htmlDualFiling() {
+    return `
+      <div class="dual-logo">
+        <img src="assets/微信支付.svg" alt="微信" width="48" height="48">
+        <img src="assets/支付宝支付.svg" alt="支付宝" width="48" height="48">
       </div>
-      <div style="font-size:20px;font-weight:600;color:var(--text-1);margin-bottom:8px;">${name}扫码认证</div>
-      <div style="font-size:14px;color:var(--text-3);margin-bottom:24px;line-height:1.6;">
-        请使用${name}扫描下方二维码<br/>完成商户主体认证
-      </div>
+      <div class="card-title">商户认证报备</div>
+      <div class="card-subtitle" style="margin-bottom:24px;">需同时向微信和支付宝申请认证报备，审核通过后生成认证二维码</div>
+      <div class="result-icon">📋</div>
+      <div class="result-title">尚未申请报备</div>
+      <div class="result-desc">点击下方按钮，一次性提交两个平台的认证报备</div>
+      <div class="action-btns">
+        <button class="btn btn-primary" onclick="applyFiling()">申请认证报备</button>
+      </div>`;
+  }
+
+  // ===== UI：报备审核中 =====
+  function htmlFiling(platform) {
+    const name = platform === 'wechat' ? '微信' : '支付宝';
+    return cardHeader(platform,
+      name + '认证报备',
+      '已提交，预计1-2个工作日完成审核')
+      + `
+      <div class="result-icon">⏳</div>
+      <div class="result-title t-warning">报备审核中</div>
+      <div class="result-desc">审核通过后将自动生成认证二维码，请耐心等待</div>
+      <div class="action-btns">
+        <button class="btn btn-primary" onclick="queryFiling('${platform}')">查询报备结果</button>
+      </div>`;
+  }
+
+  // ===== UI：报备失败 =====
+  function htmlFilingFail(cfg, platform) {
+    const name = platform === 'wechat' ? '微信' : '支付宝';
+    return cardHeader(platform,
+      name + '认证报备',
+      '报备未通过')
+      + `
+      <div class="result-icon">${cfg.icon}</div>
+      <div class="result-title t-error">${cfg.title}</div>
+      ${cfg.reason ? `
+      <div class="reason-box">
+        <div class="reason-label">失败原因</div>
+        <div class="reason-text">${cfg.reason}</div>
+      </div>` : ''}
+      <div class="action-btns">
+        <button class="btn btn-error" onclick="retryFiling('${platform}')">重新报备</button>
+      </div>`;
+  }
+
+  // ===== UI：扫码认证 =====
+  function htmlScanning(platform) {
+    const name = platform === 'wechat' ? '微信' : '支付宝';
+    const emoji = platform === 'wechat' ? '📱' : '💙';
+    return cardHeader(platform,
+      name + '扫码认证',
+      '请使用' + name + '扫描二维码完成认证')
+      + `
       <div class="qr-box">
         <div class="qr-placeholder pulse">${emoji}</div>
         <div class="qr-expire">有效期 5 分钟</div>
@@ -322,30 +408,56 @@
       </div>`;
   }
 
-  function htmlAction(cfg) {
-    return `
-      <div class="result-area">
-        <div class="result-icon">${cfg.icon}</div>
-        <div class="result-title t-warning">${cfg.title}</div>
-        <div class="info-box ib-orange">
-          <div class="ib-icon">💡</div>
-          <div class="ib-body">
-            <div class="ib-title">需要您在其他端操作</div>
-            <div class="ib-desc">${cfg.desc}完成操作后，请返回本页面点击「已完成认证」查询最新结果。</div>
-          </div>
-        </div>
-        <div class="action-btns">
-          <button class="btn btn-primary" onclick="queryResult('${getCurrentPlatform()}')">已完成认证</button>
-        </div>
+  // ===== UI：需操作 =====
+  function htmlAction(cfg, platform) {
+    const name = platform === 'wechat' ? '微信' : '支付宝';
+    return cardHeader(platform,
+      name + '认证',
+      cfg.title)
+      + `
+      <div class="result-icon">${cfg.icon}</div>
+      <div class="result-title t-warning">${cfg.title}</div>
+      <div class="result-desc">${cfg.desc}</div>
+      <div class="action-btns">
+        <button class="btn btn-primary" onclick="queryResult('${platform}')">已完成认证</button>
       </div>`;
   }
 
+  // ===== UI：认证通过 =====
   function htmlPass(platform) {
     const isWx = platform === 'wechat';
     const name = isWx ? '微信' : '支付宝';
     const otherName = isWx ? '支付宝' : '微信';
     const otherPassed = isWx ? aliState === 'PASSED' : wxState === 'PASS';
     const allDone = otherPassed;
+
+    let otherStatusText = '待认证';
+    let otherIcon = '⏳';
+    let otherClass = 'b-wait';
+    if (otherPassed) {
+      otherStatusText = '已通过';
+      otherIcon = '✅';
+      otherClass = 'b-pass';
+    } else {
+      const otherState = isWx ? aliState : wxState;
+      const otherCfg = isWx ? ALI[otherState] : WX[otherState];
+      if (otherCfg) {
+        if (otherCfg.ui === 'filing') {
+          otherStatusText = '报备中';
+        } else if (otherCfg.ui === 'filing_fail' || otherCfg.ui === 'fail') {
+          otherStatusText = '未通过';
+          otherIcon = '❌';
+          otherClass = 'b-fail';
+        } else if (otherCfg.ui === 'not_filing') {
+          otherStatusText = '未报备';
+          otherIcon = '📋';
+        } else if (otherCfg.ui === 'terminal') {
+          otherStatusText = '异常';
+          otherIcon = '⚠️';
+          otherClass = 'b-fail';
+        }
+      }
+    }
 
     let bothHtml = '';
     if (allDone) {
@@ -363,93 +475,110 @@
           </div>
         </div>
         <div class="action-btns">
-          <button class="btn btn-primary" onclick="goSuccess()">进入成功页面</button>
+          <button class="btn btn-primary" onclick="goSuccess()">完成入驻</button>
         </div>`;
     } else {
       bothHtml = `
         <div class="both-status">
           <div class="both-item b-pass">
-            <div class="bi-icon">${isWx ? '✅' : '⏳'}</div>
+            <div class="bi-icon">${isWx ? '✅' : otherIcon}</div>
             <div class="bi-label">微信认证</div>
-            <div class="bi-status">${isWx ? '已通过' : '待认证'}</div>
+            <div class="bi-status">${isWx ? '已通过' : otherStatusText}</div>
           </div>
-          <div class="both-item ${isWx ? 'b-wait' : 'b-pass'}">
-            <div class="bi-icon">${isWx ? '⏳' : '✅'}</div>
+          <div class="both-item ${isWx ? otherClass : 'b-pass'}">
+            <div class="bi-icon">${isWx ? otherIcon : '✅'}</div>
             <div class="bi-label">支付宝认证</div>
-            <div class="bi-status">${isWx ? '待认证' : '已通过'}</div>
+            <div class="bi-status">${isWx ? otherStatusText : '已通过'}</div>
           </div>
         </div>
-        <div class="info-box ib-orange" style="margin-top:16px;">
+        <div class="info-box ib-blue" style="margin-top:16px;">
           <div class="ib-icon">💡</div>
           <div class="ib-body">
-            <div class="ib-title">${otherName}认证尚未完成</div>
-            <div class="ib-desc">请切换到${otherName}认证Tab完成扫码认证</div>
+            <div class="ib-desc">请切换到${otherName}Tab完成认证</div>
           </div>
         </div>`;
     }
 
-    return `
-      <div class="result-area">
-        <div class="result-icon">🎉</div>
-        <div class="result-title t-success">${name}认证已通过</div>
-        <div class="result-desc">${allDone
-          ? '恭喜！微信和支付宝认证均已通过，入驻流程即将完成。'
-          : name + '认证已通过，还需完成' + otherName + '认证。'}</div>
-        ${bothHtml}
-      </div>`;
+    return cardHeader(platform,
+      name + '认证',
+      allDone ? '双方认证均已通过' : name + '认证已通过')
+      + `
+      <div class="result-icon">🎉</div>
+      <div class="result-title t-success">认证通过</div>
+      ${bothHtml}`;
   }
 
+  // ===== UI：认证失败 =====
   function htmlFail(cfg, platform) {
     const name = platform === 'wechat' ? '微信' : '支付宝';
-    return `
-      <div class="result-area">
-        <div class="result-icon">${cfg.icon}</div>
-        <div class="result-title t-error">${cfg.title}</div>
-        <div class="result-desc">${name}认证未通过，请查看失败原因后重新扫码认证。</div>
-        ${cfg.reason ? `
-        <div class="reason-box">
-          <div class="reason-label">失败原因</div>
-          <div class="reason-text">${cfg.reason}</div>
-        </div>` : ''}
-        <div class="action-btns">
-          <button class="btn btn-error" onclick="rescan('${platform}')">重新扫码认证</button>
-        </div>
+    return cardHeader(platform,
+      name + '认证',
+      '认证未通过')
+      + `
+      <div class="result-icon">${cfg.icon}</div>
+      <div class="result-title t-error">${cfg.title}</div>
+      ${cfg.reason ? `
+      <div class="reason-box">
+        <div class="reason-label">失败原因</div>
+        <div class="reason-text">${cfg.reason}</div>
+      </div>` : ''}
+      <div class="action-btns">
+        <button class="btn btn-error" onclick="rescan('${platform}')">重新扫码认证</button>
       </div>`;
   }
 
-  function htmlTerminal(cfg) {
-    return `
-      <div class="result-area">
-        <div class="result-icon">${cfg.icon}</div>
-        <div class="result-title t-grey">${cfg.title}</div>
-        <div class="result-desc">${cfg.desc}</div>
-      </div>`;
+  // ===== UI：终止状态 =====
+  function htmlTerminal(cfg, platform) {
+    const name = platform === 'wechat' ? '微信' : '支付宝';
+    return cardHeader(platform,
+      name + '认证',
+      cfg.title)
+      + `
+      <div class="result-icon">${cfg.icon}</div>
+      <div class="result-title t-grey">${cfg.title}</div>
+      <div class="result-desc">${cfg.desc}</div>`;
   }
 
+  // ===== 渲染分发 =====
   function renderCard(platform, state) {
     const cfg = platform === 'wechat' ? WX[state] : ALI[state];
     if (!cfg) return '';
     switch (cfg.ui) {
-      case 'scanning': return htmlScanning(platform);
-      case 'action':   return htmlAction(cfg);
-      case 'pass':     return htmlPass(platform);
-      case 'fail':     return htmlFail(cfg, platform);
-      case 'terminal': return htmlTerminal(cfg);
-      default:         return '';
+      case 'filing':      return htmlFiling(platform);
+      case 'filing_fail': return htmlFilingFail(cfg, platform);
+      case 'scanning':    return htmlScanning(platform);
+      case 'action':      return htmlAction(cfg, platform);
+      case 'pass':        return htmlPass(platform);
+      case 'fail':        return htmlFail(cfg, platform);
+      case 'terminal':    return htmlTerminal(cfg, platform);
+      default:            return '';
     }
   }
 
   // ===== 更新界面 =====
-  let currentTab = 'wechat';
-  function getCurrentPlatform() { return currentTab; }
-
   function updateUI() {
-    document.getElementById('wxCard').innerHTML = renderCard('wechat', wxState);
-    document.getElementById('aliCard').innerHTML = renderCard('alipay', aliState);
+    const wxCfg = WX[wxState];
+    const aliCfg = ALI[aliState];
+    const bothNotFiling = wxState === 'NOT_FILING' && aliState === 'NOT_FILING';
 
-    // Tab 小点
-    document.getElementById('dotWx').className = 'tab-dot ' + (WX[wxState]?.dot || 'dot-waiting');
-    document.getElementById('dotAli').className = 'tab-dot ' + (ALI[aliState]?.dot || 'dot-waiting');
+    const filingCard = document.getElementById('filingCard');
+    const tabSection = document.getElementById('tabSection');
+
+    if (bothNotFiling) {
+      // 两个都未报备 → 显示统一报备区
+      filingCard.style.display = 'block';
+      filingCard.innerHTML = htmlDualFiling();
+      tabSection.style.display = 'none';
+    } else {
+      // 至少一个已报备 → 显示Tab切换
+      filingCard.style.display = 'none';
+      tabSection.style.display = 'block';
+      document.getElementById('wxCard').innerHTML = renderCard('wechat', wxState);
+      document.getElementById('aliCard').innerHTML = renderCard('alipay', aliState);
+      // Tab 小点
+      document.getElementById('dotWx').className = 'tab-dot ' + (wxCfg?.dot || 'dot-grey');
+      document.getElementById('dotAli').className = 'tab-dot ' + (aliCfg?.dot || 'dot-grey');
+    }
   }
 
   // ===== 交互 =====
@@ -464,40 +593,81 @@
 
   function setWx(state) {
     wxState = state;
-    document.querySelectorAll('#wxBtns .ss-btn').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
+    highlightBtn('wxBtns', state, Object.keys(WX));
     updateUI();
   }
 
   function setAli(state) {
     aliState = state;
-    document.querySelectorAll('#aliBtns .ss-btn').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
+    highlightBtn('aliBtns', state, Object.keys(ALI));
     updateUI();
+  }
+
+  function highlightBtn(containerId, activeState, stateKeys) {
+    const btns = document.querySelectorAll('#' + containerId + ' .ss-btn');
+    btns.forEach(b => b.classList.remove('active'));
+    const idx = stateKeys.indexOf(activeState);
+    if (idx >= 0 && btns[idx]) btns[idx].classList.add('active');
+  }
+
+  // 申请认证报备（同时向两个平台申请）
+  function applyFiling() {
+    wxState = 'FILING';
+    aliState = 'FILING';
+    highlightBtn('wxBtns', 'FILING', Object.keys(WX));
+    highlightBtn('aliBtns', 'FILING', Object.keys(ALI));
+    updateUI();
+    showToast('📡 已同时向微信和支付宝提交认证报备');
+  }
+
+  // 查询报备结果（演示：跳到扫码态）
+  function queryFiling(platform) {
+    showToast('📡 正在查询报备结果...');
+    setTimeout(() => {
+      if (platform === 'wechat') {
+        wxState = 'AUDITING';
+        highlightBtn('wxBtns', 'AUDITING', Object.keys(WX));
+      } else {
+        aliState = 'WAITTING';
+        highlightBtn('aliBtns', 'WAITTING', Object.keys(ALI));
+      }
+      updateUI();
+      showToast('✅ 报备审核通过！已生成认证二维码');
+    }, 1500);
+  }
+
+  // 重新报备（只重新报失败的那个）
+  function retryFiling(platform) {
+    if (platform === 'wechat') {
+      wxState = 'FILING';
+      highlightBtn('wxBtns', 'FILING', Object.keys(WX));
+    } else {
+      aliState = 'FILING';
+      highlightBtn('aliBtns', 'FILING', Object.keys(ALI));
+    }
+    updateUI();
+    showToast('🔄 已重新提交认证报备');
   }
 
   function refreshQR(platform) {
     showToast('🔄 已刷新' + (platform === 'wechat' ? '微信' : '支付宝') + '二维码');
   }
 
-  // 点击「已完成认证」→ 查询结果（演示：弹提示，实际由后端返回状态）
   function queryResult(platform) {
     showToast('📡 正在查询认证结果...');
   }
 
   // 重新扫码 → 回到扫码状态
   function rescan(platform) {
-    showToast('🔄 已重新生成二维码，请扫码认证');
     if (platform === 'wechat') {
       wxState = 'AUDITING';
-      document.querySelectorAll('#wxBtns .ss-btn').forEach(b => b.classList.remove('active'));
-      document.querySelector('#wxBtns .ss-btn').classList.add('active');
+      highlightBtn('wxBtns', 'AUDITING', Object.keys(WX));
     } else {
       aliState = 'WAITTING';
-      document.querySelectorAll('#aliBtns .ss-btn').forEach(b => b.classList.remove('active'));
-      document.querySelector('#aliBtns .ss-btn').classList.add('active');
+      highlightBtn('aliBtns', 'WAITTING', Object.keys(ALI));
     }
     updateUI();
+    showToast('🔄 已重新生成二维码，请扫码认证');
   }
 
   // 双方通过 → 跳成功页
