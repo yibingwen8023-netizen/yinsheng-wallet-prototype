@@ -128,8 +128,6 @@
     .btn-primary:disabled{background:#C9CDD4;box-shadow:none;cursor:not-allowed;}
     .btn-error{background:linear-gradient(135deg,var(--error),#F76560);color:#fff;
       box-shadow:0 4px 12px rgba(245,63,63,0.3);}
-    .btn-outline{background:#fff;color:var(--text-2);border:1px solid var(--border);}
-    .btn-outline:active{background:var(--bg);}
 
     /* Tab 面板 */
     .tab-panel{display:none;}
@@ -329,12 +327,11 @@
       <div class="result-area">
         <div class="result-icon">${cfg.icon}</div>
         <div class="result-title t-warning">${cfg.title}</div>
-        <div class="result-desc">${cfg.desc}</div>
         <div class="info-box ib-orange">
           <div class="ib-icon">💡</div>
           <div class="ib-body">
             <div class="ib-title">需要您在其他端操作</div>
-            <div class="ib-desc">完成操作后，请返回本页面点击「已完成认证」查询最新结果</div>
+            <div class="ib-desc">${cfg.desc}完成操作后，请返回本页面点击「已完成认证」查询最新结果。</div>
           </div>
         </div>
         <div class="action-btns">
@@ -426,13 +423,6 @@
         <div class="result-icon">${cfg.icon}</div>
         <div class="result-title t-grey">${cfg.title}</div>
         <div class="result-desc">${cfg.desc}</div>
-        <div class="info-box ib-grey">
-          <div class="ib-icon">ℹ️</div>
-          <div class="ib-body">
-            <div class="ib-title">${cfg.title}</div>
-            <div class="ib-desc">${cfg.desc}</div>
-          </div>
-        </div>
       </div>`;
   }
 
